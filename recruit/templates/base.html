@@ -16,9 +16,9 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
         <div class="container">
-            <a class="navbar-brand" href="/">세명컴퓨터고등학교 신입생 원서접수</a>
+            <a class="navbar-brand" href="/">세명컴퓨터고등학교 원서접수</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -27,20 +27,29 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% if navbar == 'recruit' %}active{% endif %}" aria-current="page" href="/recruit/">접수하기</a>
+                        <a class="nav-link {% if navbar == 'recruit' %}active{% endif %}" aria-current="page"
+                           href="/recruit/">접수하기</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if navbar == 'confirm' %}active{% endif %}" aria-current="page" href="/confirm/">접수확인</a>
+                        <a class="nav-link {% if navbar == 'confirm' %}active{% endif %}" aria-current="page"
+                           href="/confirm/">접수확인</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if navbar == 'status' %}active{% endif %}" aria-current="page" href="/status/">실시간 지원현황</a>
+                        <a class="nav-link {% if navbar == 'docs' %}active{% endif %}" aria-current="page"
+                           href="/docs/">접수방법</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if navbar == 'status' %}active{% endif %}" aria-current="page"
+                           href="/status/">실시간 지원현황</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
-{% block container %}
-{% endblock %}
+<main role="main" class="container">
+    {% block container %}
+    {% endblock %}
+</main>
 </body>
 </html>

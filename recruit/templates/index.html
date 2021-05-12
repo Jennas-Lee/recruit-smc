@@ -1,3 +1,11 @@
 {% extends 'base.html' %}
 {% block container %}
+    <div class="card">
+        <h5 class="card-header">원서접수 가능 기간</h5>
+        <div class="card-body text-center">
+            <h3><strong>2021-11-25 00:00:00</strong></h3>
+            <h3><strong>~ 2021-11-26 23:59:59</strong></h3>
+            <h1 class="display-3 {{ d_day_color }}">{{ d_day }}</h1>
+        </div>
+    </div>
 {% endblock %}
