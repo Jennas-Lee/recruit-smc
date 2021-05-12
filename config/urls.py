@@ -19,5 +19,9 @@ from recruit import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
+    path('recruit/', views.recruit, name='recruit'),
+    path('confirm/', views.confirm, name='confirm'),
+    path('status/', views.status, name='status'),
     path('admin/', admin.site.urls),
 ]
