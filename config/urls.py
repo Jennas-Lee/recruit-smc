@@ -20,6 +20,7 @@ from recruit import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('index/', views.index, name='index'),
+    path('auth/', views.recruit, name='auth'),
     path('recruit/', views.recruit, name='recruit'),
     path('confirm/', views.confirm, name='confirm'),
     path('docs/', views.docs, name='docs'),

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block container %}
-    {% if recruit_available %}
-        <h1 class="text-center">원서접수</h1>
+    {% if auth_available %}
+        <h1 class="text-center">인증</h1>
         <form action="" method="POST">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email address</label>
@@ -9,6 +9,6 @@
             </div>
         </form>
     {% else %}
-        <h1 class="text-danger text-center">접수가능한 날짜가 아닙니다.</h1>
+        <h1 class="text-danger text-center">인증 가능한 날짜가 아닙니다.</h1>
     {% endif %}
 {% endblock %}
