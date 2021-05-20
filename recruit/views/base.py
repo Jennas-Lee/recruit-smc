@@ -24,7 +24,7 @@ def index(request):
     return render(request, 'index.html', {'d_day_color': d_day_color, 'd_day': d_day, 'recruit_status': recruit_status})
 
 
-def auth(request):
+def login(request):
     return render(request, 'auth.html')
 
 
