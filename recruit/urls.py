@@ -12,5 +12,6 @@ urlpatterns = [
 
     path('teacher/login/', teacher.Login.as_view(), name='teacher-login'),
 
+    path('healthcheck/', base.healthCheck, name='health-check'),
     path('admin/', admin.site.urls),
 ]

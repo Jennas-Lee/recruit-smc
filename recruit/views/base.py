@@ -6,7 +6,7 @@ from datetime import date
 def index(request):
     now_date = timezone.now().date()
     recruit_date = date(2021, 11, 25)
-    d_day = (recruit_date-now_date).days
+    d_day = (recruit_date - now_date).days
 
     if d_day == 0 or d_day == -1:
         d_day_color = "text-primary"
@@ -51,3 +51,7 @@ def docs(request):
 
 def status(request):
     return render(request, 'status.html', {'navbar': 'status'})
+
+
+def healthCheck(request):
+    return 'HEALTH CHECK SUCCESS'
