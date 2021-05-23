@@ -15,7 +15,7 @@ class StdUserTb(models.Model):
     USER_UPDATED_YMD = models.DateTimeField(auto_now=True, null=False)
     USER_DELETED_YMD = models.DateTimeField(null=True, blank=True)
 
-    USER_RESP_TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='TEACHER', on_delete=models.RESTRICT,
+    USER_RESP_TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='USER_RESP_TCR_USER', on_delete=models.RESTRICT,
                                                db_column='USER_RESP_TCR_USER_IDX', null=True)
 
     def __str__(self):
@@ -40,7 +40,7 @@ class StdDocTb(models.Model):
     DOC_UPDATED_YMD = models.DateTimeField(auto_now=True, null=False)
     DOC_DELETED_YMD = models.DateTimeField(null=True, blank=True)
 
-    DOC_STD_USER_IDX = models.ForeignKey('StdUserTb', related_name='STUDENT', on_delete=models.RESTRICT,
+    DOC_STD_USER_IDX = models.ForeignKey('StdUserTb', related_name='DOC_STD_USER', on_delete=models.RESTRICT,
                                          db_column='DOC_STD_USER_IDX', null=True)
 
     def __str__(self):
@@ -64,9 +64,9 @@ class StdRecruitTb(models.Model):
     STD_UPDATED_YMD = models.DateTimeField(auto_now=True, null=False)
     STD_DELETED_YMD = models.DateTimeField(null=True, blank=True)
 
-    STD_USER_IDX = models.ForeignKey('StdUserTb', related_name='STUDENT', on_delete=models.RESTRICT,
+    STD_USER_IDX = models.ForeignKey('StdUserTb', related_name='RECRUIT_STD_USER', on_delete=models.RESTRICT,
                                      db_column='STD_USER_IDX', null=True)
-    STD_RESP_TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='TEACHER', on_delete=models.RESTRICT,
+    STD_RESP_TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='RECRUIT_TCR_USER', on_delete=models.RESTRICT,
                                               db_column='STD_RESP_TCR_USER_IDX', null=True)
 
     def __str__(self):
@@ -101,9 +101,9 @@ class ScoreTb(models.Model):
     SCORE_UPDATED_YMD = models.DateTimeField(auto_now=True, null=False)
     SCORE_DELETED_YMD = models.DateTimeField(null=True, blank=True)
 
-    STD_USER_IDX = models.ForeignKey('StdUserTb', related_name='STUDENT', on_delete=models.RESTRICT,
+    STD_USER_IDX = models.ForeignKey('StdUserTb', related_name='SCORE_STD_USER', on_delete=models.RESTRICT,
                                      db_column='STD_USER_IDX', null=True)
-    TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='TEACHER', on_delete=models.RESTRICT,
+    TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='SCORE_TCR_USER', on_delete=models.RESTRICT,
                                      db_column='TCR_USER_IDX', null=True)
 
     def __str__(self):

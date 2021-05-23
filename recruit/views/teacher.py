@@ -9,9 +9,11 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
+                'id': 'login-id-input',
                 'placeholder': '아이디'
             }
-        )
+        ),
+        required=False
     )
 
     user_password = forms.CharField(
@@ -19,9 +21,11 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
+                'id': 'login-password-input',
                 'placeholder': '비밀번호'
             }
-        )
+        ),
+        required=False
     )
 
 
@@ -34,4 +38,6 @@ class Login(View):
         return render(request, 'login.html', {'form': form})
 
     def post(self, request):
-        return 'POST TEST'
+        form = self.form_class(request.POST)
+
+        return 'TEST'

@@ -1,42 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block container %}
-    <form class="row m-auto" action="{% url 'recruit:teacher-login' %}" method="post" style="width: 300px;">
+    <form class="row m-auto" style="width: 300px;" onsubmit="loginValidation();">
         {% csrf_token %}
         <h1 class="text-center">교사 로그인</h1>
-        <div class="alert alert-warning m-auto mb-3" role="alert" style="width: 276px;">
+        <div class="alert alert-warning m-auto mb-3 text-center" role="alert" style="width: 276px;">
             학생은 사용이 불가능합니다.
             <br>
             교사만 이용가능합니다.
         </div>
-        {#        <div class="form-floating" style="height: 90px;">#}
-        {#            <input type="text" class="form-control is-invalid" id="login-id" placeholder="아이디">#}
-        {#            <label for="login-id">아이디</label>#}
-        {#            <div id="login-id-validation-feedback" class="invalid-feedback">#}
-        {#                Please provide a valid city.#}
-        {#            </div>#}
-        {#        </div>#}
-        {#        <div class="form-floating" style="height: 90px;">#}
-        {#            <input type="password" class="form-control is-invalid" id="login-password" placeholder="비밀번호">#}
-        {#            <label for="login-password">비밀번호</label>#}
-        {#            <div id="login-password-validation-feedback" class="invalid-feedback">#}
-        {#                Please provide a valid city.#}
-        {#            </div>#}
-        {#        </div>#}
-        {{ form.non_field_errors }}
+        <div class="form-floating" style="height: 90px;">
+            <input type="text" class="form-control is-invalid" id="login-id" placeholder="아이디">
+            <label for="login-id">아이디</label>
+            <div id="login-id-validation-feedback" class="invalid-feedback">
+                Please provide a valid city.
+            </div>
+        </div>
+        <div class="form-floating" style="height: 90px;">
+            <input type="password" class="form-control is-invalid" id="login-password" placeholder="비밀번호">
+            <label for="login-password">비밀번호</label>
+            <div id="login-password-validation-feedback" class="invalid-feedback">
+                Please provide a valid city.
+            </div>
+        </div>
         <div class="form-floating" style="height: 90px;">
             {{ form.user_id }}
             <label for="{{ form.user_id.id_for_label }}" style="margin-left: 11px;">{{ form.user_id.label }}</label>
-            <div id="login-id-validation-feedback" class="invalid-feedback">
-                {{ form.user_id.errors }}
-            </div>
+            <div id="login-id-validation-feedback" class="invalid-feedback"></div>
         </div>
         <div class="form-floating" style="height: 90px;">
             {{ form.user_password }}
-            <label for="{{ form.user_password.id_for_label }}" style="margin-left: 11px;">{{ form.user_password.label }}</label>
-            <div id="login-id-validation-feedback" class="invalid-feedback">
-                {{ form.user_password.errors }}
-            </div>
+            <label for="{{ form.user_password.id_for_label }}"
+                   style="margin-left: 11px;">{{ form.user_password.label }}</label>
+            <div id="login-password-validation-feedback" class="invalid-feedback"></div>
         </div>
-        <button class="btn btn-primary m-auto" type="submit" style="width: 276px;">로그인</button>
+        <button class="btn btn-primary m-auto" id="login-btn" type="submit" style="width: 276px;">
+            <span class="spinner-border spinner-border-sm visually-hidden" id="login-btn-spinner" role="status"
+                  aria-hidden="true"></span>
+            <span class="visually-hidden">Loading...</span>
+            로그인
+        </button>
     </form>
+    <form class="form-floating">
+  <input type="email" class="form-control is-invalid" id="floatingInputInvalid" placeholder="name@example.com" value="test@example.com">
+  <label for="floatingInputInvalid">Invalid input</label>
+</form>
+    <script src="{% static 'js/loginValidation.js' %}"></script>
 {% endblock %}
