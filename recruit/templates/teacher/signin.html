@@ -13,7 +13,7 @@
             {{ form.user_id }}
             <label for="{{ form.user_id.id_for_label }}" style="margin-left: 11px;">{{ form.user_id.label }}</label>
             <div id="login-id-validation-feedback" class="invalid-feedback">
-                {{ form.user_id.errors }}
+                {{ form.user_id.error_messages }}
             </div>
         </div>
         <div class="form-floating" style="height: 90px;">
@@ -28,6 +28,7 @@
             <span class="visually-hidden">Loading...</span>
             로그인
         </button>
+        <a href="/teacher/signup" class="text-primary text-decoration-none">교사 회원가입</a>
     </form>
-{#    <script src="{% static 'js/loginValidation.js' %}"></script>#}
+    {#    <script src="{% static 'js/loginValidation.js' %}"></script>#}
 {% endblock %}

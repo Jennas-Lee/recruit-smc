@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from recruit.views import base, teacher
+from recruit.views import base
+from recruit.views.teacher import signin, signup
 
 urlpatterns = [
     path('', base.index, name='index'),
@@ -10,8 +11,8 @@ urlpatterns = [
     path('docs/', base.docs, name='docs'),
     path('status/', base.status, name='status'),
 
-    # path('teacher/login/', teacher.Login.as_view(), name='teacher-login'),
-    path('teacher/login/', teacher.LoginFormView.as_view(), name='teacher-login'),
+    path('teacher/signin/', signin.SigninFormView.as_view(), name='teacher-signin'),
+    path('teacher/signup/', signup.SignupFormView.as_view(), name='teacher-signup'),
 
     path('healthcheck/', base.healthCheck, name='health-check'),
     path('admin/', admin.site.urls),

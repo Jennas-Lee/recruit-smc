@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block container %}
+    <form class="m-auto w-75" method="POST">
+        {% csrf_token %}
+        <h1 class="text-center">교사 회원가입</h1>
+        <div class="alert alert-warning m-auto mb-3 text-center" role="alert">
+            학생은 사용이 불가능합니다. 교사만 이용가능합니다.
+        </div>
+        <div class="row mb-3">
+            <label for="{{ form.user_id.id_for_label }}"
+                   class="col-sm-3 col-form-label">{{ form.user_id.label }}</label>
+            <div class="col-sm-9">
+                {{ form.user_id }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="{{ form.user_password.id_for_label }}"
+                   class="col-sm-3 col-form-label">{{ form.user_password.label }}</label>
+            <div class="col-sm-9">
+                {{ form.user_password }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="{{ form.user_confirm_password.id_for_label }}"
+                   class="col-sm-3 col-form-label">{{ form.user_confirm_password.label }}</label>
+            <div class="col-sm-9">
+                {{ form.user_confirm_password }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="{{ form.user_name.id_for_label }}"
+                   class="col-sm-3 col-form-label">{{ form.user_name.label }}</label>
+            <div class="col-sm-9">
+                {{ form.user_name }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="{{ form.user_team.id_for_label }}"
+                   class="col-sm-3 col-form-label">{{ form.user_team.label }}</label>
+            <div class="col-sm-9">
+                {{ form.user_team }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">회원가입</button>
+    </form>
+{% endblock %}
