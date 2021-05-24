@@ -54,4 +54,4 @@ def status(request):
 
 
 def healthCheck(request):
-    return 'HEALTH CHECK SUCCESS'
+    return render(request, 'healthcheck.html')

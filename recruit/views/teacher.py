@@ -1,6 +1,6 @@
 from django import forms
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, FormView
 
 
 class LoginForm(forms.Form):
@@ -15,7 +15,6 @@ class LoginForm(forms.Form):
         ),
         required=False
     )
-
     user_password = forms.CharField(
         label='비밀번호',
         widget=forms.PasswordInput(
@@ -27,6 +26,13 @@ class LoginForm(forms.Form):
         ),
         required=False
     )
+
+    def clean(self):
+        user_id = self.cleaned_data['user_id']
+        user_password = self.cleaned_data['user_password']
+
+        if len(user_id) == 0:
+            self.add_error('user_id', forms.ValidationError('아이디를 입력하세요.'))
 
 
 class Login(View):
@@ -41,3 +47,12 @@ class Login(View):
         form = self.form_class(request.POST)
 
         return 'TEST'
+
+
+class LoginFormView(FormView):
+    form_class = LoginForm
+    template_name = 'login.html'
+    success_url = '/healthcheck/'
+
+    def form_valid(self, form):
+        return super(LoginFormView, self).form_valid(form)

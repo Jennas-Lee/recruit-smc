@@ -10,7 +10,8 @@ urlpatterns = [
     path('docs/', base.docs, name='docs'),
     path('status/', base.status, name='status'),
 
-    path('teacher/login/', teacher.Login.as_view(), name='teacher-login'),
+    # path('teacher/login/', teacher.Login.as_view(), name='teacher-login'),
+    path('teacher/login/', teacher.LoginFormView.as_view(), name='teacher-login'),
 
     path('healthcheck/', base.healthCheck, name='health-check'),
     path('admin/', admin.site.urls),
