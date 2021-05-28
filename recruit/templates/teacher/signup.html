@@ -12,6 +12,9 @@
                    class="col-sm-3 col-form-label">{{ form.user_id.label }}</label>
             <div class="col-sm-9">
                 {{ form.user_id }}
+                <div id="signup-id-validation-feedback" class="invalid-feedback">
+                    {{ form.user_id.errors }}
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -19,6 +22,9 @@
                    class="col-sm-3 col-form-label">{{ form.user_password.label }}</label>
             <div class="col-sm-9">
                 {{ form.user_password }}
+                <div id="signup-password-validation-feedback" class="invalid-feedback">
+                    {{ form.user_password.errors }}
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -26,6 +32,9 @@
                    class="col-sm-3 col-form-label">{{ form.user_confirm_password.label }}</label>
             <div class="col-sm-9">
                 {{ form.user_confirm_password }}
+                <div id="signup-confirm-password-validation-feedback" class="invalid-feedback">
+                    {{ form.user_confirm_password.errors }}
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -33,6 +42,9 @@
                    class="col-sm-3 col-form-label">{{ form.user_name.label }}</label>
             <div class="col-sm-9">
                 {{ form.user_name }}
+                <div id="signup-name-validation-feedback" class="invalid-feedback">
+                    {{ form.user_name.errors }}
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -40,8 +52,17 @@
                    class="col-sm-3 col-form-label">{{ form.user_team.label }}</label>
             <div class="col-sm-9">
                 {{ form.user_team }}
+                <div id="signup-team-validation-feedback" class="invalid-feedback">
+                    {{ form.user_team.errors }}
+                </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">회원가입</button>
+        <button type="submit" class="btn btn-primary" id="signup-btn">
+            <span class="spinner-border spinner-border-sm visually-hidden" id="signup-btn-spinner" role="status"
+                  aria-hidden="true"></span>
+            <span class="visually-hidden">Loading...</span>
+            회원가입
+        </button>
     </form>
+    <script src="{% static 'js/signupValidation.js' %}"></script>
 {% endblock %}

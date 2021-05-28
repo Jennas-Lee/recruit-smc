@@ -1,6 +1,5 @@
 from django import forms
-from django.shortcuts import render
-from django.views.generic import View, FormView
+from django.views.generic import FormView
 
 
 class SigninForm(forms.Form):
@@ -8,7 +7,7 @@ class SigninForm(forms.Form):
         label='아이디',
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control is-invalid',
+                'class': 'form-control',
                 'id': 'signin-id-input',
                 'placeholder': '아이디'
             }
@@ -33,20 +32,11 @@ class SigninForm(forms.Form):
 
         if len(user_id) == 0:
             self.add_error('user_id', forms.ValidationError('아이디를 입력하세요.'))
+            self.fields['user_id'].widget.attrs['class'] += ' is-invalid'
 
-
-class Signin(View):
-    form_class = SigninForm
-
-    def get(self, request):
-        form = self.form_class()
-
-        return render(request, 'teacher/signin.html', {'form': form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-
-        return 'TEST'
+        if len(user_password) == 0:
+            self.add_error('user_password', forms.ValidationError('비밀번호를 입력하세요.'))
+            self.fields['user_password'].widget.attrs['class'] += ' is-invalid'
 
 
 class SigninFormView(FormView):

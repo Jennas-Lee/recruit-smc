@@ -1,3 +1,9 @@
 * {
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+.errorlist {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}

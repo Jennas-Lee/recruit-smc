@@ -9,26 +9,28 @@
             <br>
             교사만 이용가능합니다.
         </div>
-        <div class="form-floating" style="height: 90px;">
+        <div class="form-floating mb-3">
             {{ form.user_id }}
             <label for="{{ form.user_id.id_for_label }}" style="margin-left: 11px;">{{ form.user_id.label }}</label>
-            <div id="login-id-validation-feedback" class="invalid-feedback">
-                {{ form.user_id.error_messages }}
+            <div id="signin-id-validation-feedback" class="invalid-feedback">
+                {{ form.user_id.errors }}
             </div>
         </div>
-        <div class="form-floating" style="height: 90px;">
+        <div class="form-floating mb-3">
             {{ form.user_password }}
             <label for="{{ form.user_password.id_for_label }}"
                    style="margin-left: 11px;">{{ form.user_password.label }}</label>
-            <div id="login-password-validation-feedback" class="invalid-feedback"></div>
+            <div id="signin-password-validation-feedback" class="invalid-feedback">
+                {{ form.user_password.errors }}
+            </div>
         </div>
-        <button class="btn btn-primary m-auto" id="login-btn" type="submit" style="width: 276px;">
-            <span class="spinner-border spinner-border-sm visually-hidden" id="login-btn-spinner" role="status"
+        <button class="btn btn-primary m-auto" id="signin-btn" type="submit" style="width: 276px;">
+            <span class="spinner-border spinner-border-sm visually-hidden" id="signin-btn-spinner" role="status"
                   aria-hidden="true"></span>
             <span class="visually-hidden">Loading...</span>
             로그인
         </button>
-        <a href="/teacher/signup" class="text-primary text-decoration-none">교사 회원가입</a>
+        <a href="/teacher/signup/" class="text-primary text-decoration-none">교사 회원가입</a>
     </form>
-    {#    <script src="{% static 'js/loginValidation.js' %}"></script>#}
+    <script src="{% static 'js/signinValidation.js' %}"></script>
 {% endblock %}
