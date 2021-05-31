@@ -12,7 +12,7 @@ urlpatterns = [
     path('status/', base.status, name='status'),
 
     path('teacher/signin/', signin.SigninFormView.as_view(), name='teacher-signin'),
-    path('teacher/signup/', signup.SignupFormView.as_view(), name='teacher-signup'),
+    path('teacher/signup/', signup.SignupView.as_view(), name='teacher-signup'),
 
     path('healthcheck/', base.healthCheck, name='health-check'),
     path('admin/', admin.site.urls),

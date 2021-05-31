@@ -1,60 +1,65 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block container %}
-    <form class="m-auto w-75" method="POST">
+    <form class="m-auto w-75" id="signup-form">
         {% csrf_token %}
         <h1 class="text-center">교사 회원가입</h1>
         <div class="alert alert-warning m-auto mb-3 text-center" role="alert">
             학생은 사용이 불가능합니다. 교사만 이용가능합니다.
         </div>
         <div class="row mb-3">
-            <label for="{{ form.user_id.id_for_label }}"
-                   class="col-sm-3 col-form-label">{{ form.user_id.label }}</label>
+            <label for="signup-id-input"
+                   class="col-sm-3 col-form-label">아이디</label>
             <div class="col-sm-9">
-                {{ form.user_id }}
-                <div id="signup-id-validation-feedback" class="invalid-feedback">
-                    {{ form.user_id.errors }}
-                </div>
+                <input type="text" name="user_id" class="form-control" id="signup-id-input">
+                <div id="signup-id-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="{{ form.user_password.id_for_label }}"
-                   class="col-sm-3 col-form-label">{{ form.user_password.label }}</label>
+            <label for="signup-password-input"
+                   class="col-sm-3 col-form-label">비밀번호</label>
             <div class="col-sm-9">
-                {{ form.user_password }}
-                <div id="signup-password-validation-feedback" class="invalid-feedback">
-                    {{ form.user_password.errors }}
-                </div>
+                <input type="text" name="user_password" class="form-control" id="signup-password-input">
+                <div id="signup-password-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="{{ form.user_confirm_password.id_for_label }}"
-                   class="col-sm-3 col-form-label">{{ form.user_confirm_password.label }}</label>
+            <label for="signup-confirm-password-input"
+                   class="col-sm-3 col-form-label">비밀번호 확인</label>
             <div class="col-sm-9">
-                {{ form.user_confirm_password }}
-                <div id="signup-confirm-password-validation-feedback" class="invalid-feedback">
-                    {{ form.user_confirm_password.errors }}
-                </div>
+                <input type="text" name="user_confirm-password" class="form-control" id="signup-confirm-password-input">
+                <div id="signup-confirm-password-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="{{ form.user_name.id_for_label }}"
-                   class="col-sm-3 col-form-label">{{ form.user_name.label }}</label>
+            <label for="signup-name-input"
+                   class="col-sm-3 col-form-label">이름</label>
             <div class="col-sm-9">
-                {{ form.user_name }}
-                <div id="signup-name-validation-feedback" class="invalid-feedback">
-                    {{ form.user_name.errors }}
-                </div>
+                <input type="text" name="user_name" class="form-control" id="signup-name-input">
+                <div id="signup-name-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="{{ form.user_team.id_for_label }}"
-                   class="col-sm-3 col-form-label">{{ form.user_team.label }}</label>
+            <label for="signup-team-input"
+                   class="col-sm-3 col-form-label">부서</label>
             <div class="col-sm-9">
-                {{ form.user_team }}
-                <div id="signup-team-validation-feedback" class="invalid-feedback">
-                    {{ form.user_team.errors }}
-                </div>
+                <select name="user_team" id="signup-team-input" class="form-select">
+                    <option value="0">선택</option>
+                    <option value="1">교무기획부</option>
+                    <option value="2">교육연구부</option>
+                    <option value="3">생활안전부</option>
+                    <option value="4">교과교육부</option>
+                    <option value="5">창의체험부</option>
+                    <option value="6">취업지원부</option>
+                    <option value="7">진로상담부</option>
+                    <option value="8">홍보기획부</option>
+                    <option value="9">실과도제교육부</option>
+                    <option value="10">스마트보안솔루션과</option>
+                    <option value="11">디바이스소프트웨어과</option>
+                    <option value="12">인공지능소프트웨어과</option>
+                    <option value="13">게임소프트웨어과</option>
+                </select>
+                <div id="signup-team-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary" id="signup-btn">
