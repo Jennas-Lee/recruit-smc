@@ -30,7 +30,7 @@ class SignupView(View):
         elif TcrUserTb.objects.filter(USER_ID_TXT=request_data.get('user_id')).count() > 0:
             response_code = 200
             response_data['user_id'] = '이미 사용중인 아이디입니다.'
-        else:  # TODO: Deny duplicate user_id
+        else:
             response_code = 200
 
         if request_data.get('user_password') == '':
