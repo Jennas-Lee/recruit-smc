@@ -6,27 +6,6 @@ const signupPasswordConfirmInput = document.getElementById('signup-confirm-passw
 const signupNameInput = document.getElementById('signup-name-input');
 const signupTeamInput = document.getElementById('signup-team-input');
 
-const getCookie = (name) => {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        let cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-const csrfSafeMethod = (method) => {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-
 const csrftoken = getCookie('csrftoken');
 
 const signupInputFocus = (tag) => {
@@ -53,10 +32,11 @@ signupTeamInput.oninput = () => {
     signupInputFocus(signupTeamInput);
 }
 
-submitButton.onclick = () => {
-
-    // submitButton.classList.add('disabled');
-    // submitButtonSpinner.classList.remove('visually-hidden');
+const printValidateError = (inputId, validateId, errorText) => {
+    document.getElementById(inputId).classList.add('is-invalid');
+    document.getElementById(validateId).innerText = errorText;
+    submitButton.classList.remove('disabled');
+    submitButtonSpinner.classList.add('visually-hidden');
 }
 
 document.getElementById('signup-form').addEventListener('submit', (event) => {
@@ -72,6 +52,7 @@ document.getElementById('signup-form').addEventListener('submit', (event) => {
     }
 
     event.preventDefault();
+
     fetch('/teacher/signup/', {
         method: 'POST',
         headers: {
@@ -80,7 +61,34 @@ document.getElementById('signup-form').addEventListener('submit', (event) => {
         },
         body: JSON.stringify(data)
     })
-        .then((response) => {
-            response.status
+        .then((response) => response.json())
+        .then((data) => {
+            if (data['user_id'] !== undefined) {
+                printValidateError('signup-id-input', 'signup-id-validation-feedback', data['user_id']);
+            }
+            if (data['user_password'] !== undefined) {
+                printValidateError('signup-password-input', 'signup-password-validation-feedback', data['user_password']);
+            }
+            if (data['user_password_confirm'] !== undefined) {
+                printValidateError('signup-confirm-password-input', 'signup-confirm-password-validation-feedback', data['user_password_confirm']);
+            }
+            if (data['user_name'] !== undefined) {
+                printValidateError('signup-name-input', 'signup-name-validation-feedback', data['user_name']);
+            }
+            if (data['user_team'] !== undefined) {
+                printValidateError('signup-team-input', 'signup-team-validation-feedback', data['user_team']);
+            }
+            if (data['success'] === 1) {
+                alert('가입이 완료되었습니다. 관리자 승인 후 로그인할 수 있습니다.');
+                location.href = '/';
+            }
+            if (data['success'] === -1) {
+                new Error('Server Error');
+            }
         })
+        .catch((error) => {
+            alert('문제가 발생했습니다. 잠시후에 다시 시도해주세요. 이 문구가 계속되면 관리자에게 연락해주세요.');
+            submitButton.classList.remove('disabled');
+            submitButtonSpinner.classList.add('visually-hidden');
+        });
 });

@@ -19,7 +19,7 @@
             <label for="signup-password-input"
                    class="col-sm-3 col-form-label">비밀번호</label>
             <div class="col-sm-9">
-                <input type="text" name="user_password" class="form-control" id="signup-password-input">
+                <input type="password" name="user_password" class="form-control" id="signup-password-input">
                 <div id="signup-password-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <label for="signup-confirm-password-input"
                    class="col-sm-3 col-form-label">비밀번호 확인</label>
             <div class="col-sm-9">
-                <input type="text" name="user_confirm-password" class="form-control" id="signup-confirm-password-input">
+                <input type="password" name="user_confirm-password" class="form-control" id="signup-confirm-password-input">
                 <div id="signup-confirm-password-validation-feedback" class="invalid-feedback"></div>
             </div>
         </div>
@@ -69,5 +69,6 @@
             회원가입
         </button>
     </form>
+    <script src="{% static 'js/managementCsrf.js' %}"></script>
     <script src="{% static 'js/signupValidation.js' %}"></script>
 {% endblock %}

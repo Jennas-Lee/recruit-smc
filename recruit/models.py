@@ -78,6 +78,9 @@ class StdRecruitTb(models.Model):
 
 class TcrUserTb(models.Model):
     IDX = models.AutoField(primary_key=True, null=False)
+    USER_ID_TXT = models.CharField(unique=True, max_length=15, null=False)
+    USER_PASSWORD_TXT = models.TextField(null=False)
+    USER_TEAM_CD = models.IntegerField(null=False)
     USER_NM = models.CharField(max_length=5, null=False)
     USER_ST = models.IntegerField(null=False)
 
