@@ -39,7 +39,7 @@ class SigninView(View):
                     response_data['user_authorize'] = user_authorize
                     if user_authorize >= 0:
                         jwt_data = {'user_id': user_object.USER_ID_TXT, 'user_name': user_object.USER_NM,
-                                    'exp': datetime.utcnow() + timedelta(hours=15)}
+                                    'user_st': user_object.USER_ST, 'exp': datetime.utcnow() + timedelta(hours=15)}
                         token = jwt.encode(jwt_data, SECRET_KEY, ALGORITHM)
                         response_data['user_jwt'] = token
                 else:

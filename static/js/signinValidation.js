@@ -49,10 +49,8 @@ document.getElementById('signin-form').addEventListener('submit', (event) => {
             if (data['user_id'] === undefined && data['user_password'] === undefined) {
                 if (data['user_authorize'] === -1) {
                     alert('관리자가 아직 승인하지 않았습니다.');
-                    location.href = '/';
                 } else if (data['user_authorize'] === -2) {
                     alert('관리자가 승인을 거부했습니다.');
-                    location.href = '/';
                 } else {
                     if(data['success'] === -1) {
                         throw new Error('JWT ERROR');

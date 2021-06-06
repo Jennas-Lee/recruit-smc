@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.utils import timezone
 from datetime import date
+import jwt
+from config.settings import SECRET_KEY, ALGORITHM
 
 
 def index(request):
     now_date = timezone.now().date()
     recruit_date = date(2021, 11, 25)
     d_day = (recruit_date - now_date).days
+    user_st = 0
+    user_st_bit = []
 
     if d_day == 0 or d_day == -1:
         d_day_color = "text-primary"
@@ -21,11 +25,18 @@ def index(request):
         d_day = "+" + str((d_day + 1) * -1)
         recruit_status = '<span class="text-danger">접수가 종료되었습니다.</span>'
 
-    return render(request, 'index.html', {'d_day_color': d_day_color, 'd_day': d_day, 'recruit_status': recruit_status})
+    verify_token = validateToken(request.COOKIES.get('USER_JWT'))
+    if verify_token is None:
+        user_st = 0
+    else:
+        user_st = verify_token['user_st']
+        user_st_bit = makeBit(user_st)
+        print(user_st)
+        print(user_st_bit)
 
-
-def login(request):
-    return render(request, 'auth.html')
+    return render(request, 'index.html',
+                  {'d_day_color': d_day_color, 'd_day': d_day, 'recruit_status': recruit_status, 'user_st': user_st,
+                   'user_st_bit': user_st_bit})
 
 
 def recruit(request):
@@ -55,3 +66,30 @@ def status(request):
 
 def healthCheck(request):
     return render(request, 'healthcheck.html')
+
+
+def validateToken(token):
+    try:
+        verity_token = jwt.decode(token, SECRET_KEY, ALGORITHM)
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
+    else:
+        return verity_token
+
+
+def makeBit(user_st):
+    user_st_arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    n = user_st
+    t = []
+    j = 1
+    while n != 0:
+        t.append(n % 2)
+        n = n // 2
+
+    for i in range(len(t) - 1, -1, -1):
+        user_st_arr[j] = t[i]
+        j += 1
+
+    return user_st_arr
