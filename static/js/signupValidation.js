@@ -87,6 +87,7 @@ document.getElementById('signup-form').addEventListener('submit', (event) => {
             }
         })
         .catch((error) => {
+            console.log(error);
             alert('문제가 발생했습니다. 잠시후에 다시 시도해주세요. 이 문구가 계속되면 관리자에게 연락해주세요.');
             submitButton.classList.remove('disabled');
             submitButtonSpinner.classList.add('visually-hidden');

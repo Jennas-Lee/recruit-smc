@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle {% if navbar == 'management' %}active{% endif %}" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             관리
                         </a>
@@ -58,48 +58,52 @@
                             {% if user_st_bit.1 == 1 %}
                                 <li><a class="dropdown-item" href="#">가접수</a></li>{% endif %}
                             {% if user_st_bit.2 == 1 %}
-                                <li><a class="dropdown-item" href="#">가접수</a></li>{% endif %}
-                            {% if user_st_bit.3 == 1 %}
                                 <li><a class="dropdown-item" href="#">원서접수</a></li>{% endif %}
-                            {% if user_st >= 4 %}
+                            {% if user_st >= 3 %}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>{% endif %}
-                            {% if user_st_bit.4 == 1 %}
+                            {% if user_st_bit.3 == 1 %}
                                 <li><a class="dropdown-item" href="#">포트폴리오 채점</a></li>{% endif %}
-                            {% if user_st_bit.5 == 1 %}
+                            {% if user_st_bit.4 == 1 %}
                                 <li><a class="dropdown-item" href="#">자기소개서 채점</a></li>{% endif %}
-                            {% if user_st_bit.6 == 1 %}
+                            {% if user_st_bit.5 == 1 %}
                                 <li><a class="dropdown-item" href="#">학업계획서 채점</a></li>{% endif %}
-                            {% if user_st_bit.7 == 1 %}
+                            {% if user_st_bit.6 == 1 %}
                                 <li><a class="dropdown-item" href="#">기초소양능력 채점</a></li>{% endif %}
-                            {% if user_st_bit.8 == 1 %}
+                            {% if user_st_bit.7 == 1 %}
                                 <li><a class="dropdown-item" href="#">인성 채점</a></li>{% endif %}
-                            {% if user_st_bit.9 == 1 %}
+                            {% if user_st_bit.8 == 1 %}
                                 <li><a class="dropdown-item" href="#">전공적성 채점</a></li>{% endif %}
                             {% if user_st >= 256 %}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>{% endif %}
-                            {% if user_st_bit.10 == 1 %}
+                            {% if user_st_bit.9 == 1 %}
                                 <li><a class="dropdown-item" href="#">학생 정보 관리</a></li>{% endif %}
-                            {% if user_st_bit.11 == 1 %}
-                                <li><a class="dropdown-item" href="#">교사 회원 관리</a></li>{% endif %}
+                            {% if user_st_bit.10 == 1 %}
+                                <li><a class="dropdown-item" href="/management/teacher/">교사 회원 관리</a></li>{% endif %}
                         </ul>
                     </li>
                 </ul>
                 <ul class="d-flex navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/teacher/signin/">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                      d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"></path>
-                                <path fill-rule="evenodd"
-                                      d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1. 5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
-                            </svg>
-                            교사 로그인
-                        </a>
+                        {% if user_st > 0 %}
+                            <a class="nav-link" aria-current="page" href="/teacher/signout/">
+                                로그아웃
+                            </a>
+                        {% else %}
+                            <a class="nav-link" aria-current="page" href="/teacher/signin/">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"></path>
+                                    <path fill-rule="evenodd"
+                                          d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1. 5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
+                                </svg>
+                                교사 로그인
+                            </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>

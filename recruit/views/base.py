@@ -31,8 +31,6 @@ def index(request):
     else:
         user_st = verify_token['user_st']
         user_st_bit = makeBit(user_st)
-        print(user_st)
-        print(user_st_bit)
 
     return render(request, 'index.html',
                   {'d_day_color': d_day_color, 'd_day': d_day, 'recruit_status': recruit_status, 'user_st': user_st,
