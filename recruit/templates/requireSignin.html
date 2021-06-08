@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block wrap %}
+{% if user_st > 0 %}
+    {% block container %}
+    {% endblock %}
+{% else %}
+    로그인이 필요합니다. <a href="/teacher/signin" class="text-decoration-none">로그인하기</a>
+{% endif %}
+{% endblock %}

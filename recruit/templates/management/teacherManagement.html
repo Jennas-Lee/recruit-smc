@@ -1,9 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'requireSignin.html' %}
 {% load static %}
 {% block container %}
     <h1 class="text-center">교사 회원관리</h1>
     {% if user_exist %}
         <form class="container">
+            {% csrf_token %}
+            <input type="hidden" name="before_user_name" value="{{ user_name }}">
+        <input type="hidden" name="before_user_team" value="{{ user_team }}">
+        <input type="hidden" name="before_user_st" value="{{ user_st }}">
             <div class="mb-3 row">
                 <div class="col-md-3 col-form-label">이름</div>
                 <div class="col-md-9">
@@ -48,65 +52,89 @@
                     <div class="row">
                         <div class="form-check col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize1" id="authorize-1"
-                                   {% if user_authorize.1 %}checked{% endif %}>
+                                   {% if user_authorize.2 %}checked{% endif %}>
                             <label for="authorize-1" class="form-check-label">가접수</label>
                         </div>
                         <div class="form-check col-6 col-md-8">
                             <input type="checkbox" class="form-check-input" value="authorize2" id="authorize-2"
-                                   {% if user_authorize.2 %}checked{% endif %}>
+                                   {% if user_authorize.3 %}checked{% endif %}>
                             <label for="authorize-2" class="form-check-label">원서접수</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize3" id="authorize-3"
-                                   {% if user_authorize.3 %}checked{% endif %}>
+                                   {% if user_authorize.4 %}checked{% endif %}>
                             <label for="authorize-3" class="form-check-label">포트폴리오 채점</label>
                         </div>
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize4" id="authorize-4"
-                                   {% if user_authorize.4 %}checked{% endif %}>
+                                   {% if user_authorize.5 %}checked{% endif %}>
                             <label for="authorize-4" class="form-check-label">자기소개서 채점</label>
                         </div>
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize5" id="authorize-5"
-                                   {% if user_authorize.5 %}checked{% endif %}>
+                                   {% if user_authorize.6 %}checked{% endif %}>
                             <label for="authorize-5" class="form-check-label">학업계획서 채점</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize6" id="authorize-6"
-                                   {% if user_authorize.6 %}checked{% endif %}>
+                                   {% if user_authorize.7 %}checked{% endif %}>
                             <label for="authorize-6" class="form-check-label">기초소양능력 채점</label>
                         </div>
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize7" id="authorize-7"
-                                   {% if user_authorize.7 %}checked{% endif %}>
+                                   {% if user_authorize.8 %}checked{% endif %}>
                             <label for="authorize-7" class="form-check-label">인성 채점</label>
                         </div>
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize8" id="authorize-8"
-                                   {% if user_authorize.8 %}checked{% endif %}>
+                                   {% if user_authorize.9 %}checked{% endif %}>
                             <label for="authorize-8" class="form-check-label">전공적성 채점</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-check col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize9" id="authorize-9"
-                                   {% if user_authorize.9 %}checked{% endif %}>
+                                   {% if user_authorize.10 %}checked{% endif %}>
                             <label for="authorize-9" class="form-check-label">학생 정보 관리</label>
                         </div>
                         <div class="form-check col-6 col-md-4">
                             <input type="checkbox" class="form-check-input" value="authorize10" id="authorize-10"
-                                   {% if user_authorize.10 %}checked{% endif %}>
+                                   {% if user_authorize.11 %}checked{% endif %}>
                             <label for="authorize-10" class="form-check-label">교사 회원 관리</label>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-danger float-end" type="submit">회원 삭제</button>
-            <button class="btn btn-primary float-end me-2">수정</button>
+            <button type="button" class="btn btn-danger float-end" type="submit">회원 삭제</button>
+            <button type="button" class="btn btn-warning float-end me-2" data-bs-toggle="modal"
+                    data-bs-target="#managementTeacherUpdate">수정
+            </button>
+            <a href="/management/teacher" class="btn btn-secondary float-end me-2">목록</a>
+
+            <div class="modal fade" id="managementTeacherUpdate" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="managementTeacherUpdateLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="managementTeacherUpdateLabel">회원정보 수정</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>수정을 진행하시겠습니까?</h5>
+                            <hr>
+                            <p>수정하려는 항목은 다음과 같습니다.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
+                            <button type="button" class="btn btn-danger">수정</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     {% else %}
         <div class="alert alert-danger d-flex align-items-center" role="alert">

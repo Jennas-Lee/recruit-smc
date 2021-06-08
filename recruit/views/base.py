@@ -25,12 +25,7 @@ def index(request):
         d_day = "+" + str((d_day + 1) * -1)
         recruit_status = '<span class="text-danger">접수가 종료되었습니다.</span>'
 
-    verify_token = validateToken(request.COOKIES.get('USER_JWT'))
-    if verify_token is None:
-        user_st = 0
-    else:
-        user_st = verify_token['user_st']
-        user_st_bit = makeBit(user_st)
+    user_st, user_st_bit = verifyToken(request.COOKIES.get('USER_JWT'))
 
     return render(request, 'index.html',
                   {'d_day_color': d_day_color, 'd_day': d_day, 'recruit_status': recruit_status, 'user_st': user_st,
@@ -66,6 +61,20 @@ def healthCheck(request):
     return render(request, 'healthcheck.html')
 
 
+def verifyToken(token):
+    verify_token = validateToken(token)
+    user_st = 0
+    user_st_bit = []
+
+    if verify_token is None:
+        user_st = 0
+    else:
+        user_st = verify_token['user_st']
+        user_st_bit = makeBit(user_st)
+
+    return user_st, user_st_bit
+
+
 def validateToken(token):
     try:
         verity_token = jwt.decode(token, SECRET_KEY, ALGORITHM)
@@ -78,7 +87,7 @@ def validateToken(token):
 
 
 def makeBit(user_st):
-    user_st_arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    user_st_arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     n = user_st
     t = []
     j = 1

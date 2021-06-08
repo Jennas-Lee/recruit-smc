@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'requireSignin.html' %}
 {% load static %}
 {% block container %}
     <h1 class="text-center">교사 회원관리</h1>
@@ -12,45 +12,43 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            {% for teacher in page_obj %}
-                {% if teacher.USER_ST > 0 %}
-                    <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>
-                    <td><a href="/management/teacher/{{ teacher.USER_ID_TXT }}"
-                           class="text-decoration-none">{{ teacher.USER_NM }}</a></td>
-                    <td>{{ teacher.USER_ID_TXT }}</td>
-                    <td>
-                        {% if teacher.USER_TEAM_CD == 1 %}
-                            교무기획부
-                        {% elif teacher.USER_TEAM_CD == 2 %}
-                            교육연구부
-                        {% elif teacher.USER_TEAM_CD == 3 %}
-                            생활안전부
-                        {% elif teacher.USER_TEAM_CD == 4 %}
-                            교과교육부
-                        {% elif teacher.USER_TEAM_CD == 5 %}
-                            창의체험부
-                        {% elif teacher.USER_TEAM_CD == 6 %}
-                            취업지원부
-                        {% elif teacher.USER_TEAM_CD == 7 %}
-                            진로상담부
-                        {% elif teacher.USER_TEAM_CD == 8 %}
-                            홍부기획부
-                        {% elif teacher.USER_TEAM_CD == 9 %}
-                            실과도제교육부
-                        {% elif teacher.USER_TEAM_CD == 10 %}
-                            스마트보안솔루션과
-                        {% elif teacher.USER_TEAM_CD == 11 %}
-                            디바이스소프트웨어과
-                        {% elif teacher.USER_TEAM_CD == 12 %}
-                            인공지능소프트웨어과
-                        {% elif teacher.USER_TEAM_CD == 13 %}
-                            게임소프트웨어과
-                        {% endif %}
-                    </td>
-                {% endif %}
-            {% endfor %}
-        </tr>
+        {% for teacher in page_obj %}
+            <tr>
+                <th scope="row">{{ forloop.counter0|add:page_obj.start_index }}</th>
+                <td><a href="/management/teacher/{{ teacher.USER_ID_TXT }}"
+                       class="text-decoration-none">{{ teacher.USER_NM }}</a></td>
+                <td>{{ teacher.USER_ID_TXT }}</td>
+                <td>
+                    {% if teacher.USER_TEAM_CD == 1 %}
+                        교무기획부
+                    {% elif teacher.USER_TEAM_CD == 2 %}
+                        교육연구부
+                    {% elif teacher.USER_TEAM_CD == 3 %}
+                        생활안전부
+                    {% elif teacher.USER_TEAM_CD == 4 %}
+                        교과교육부
+                    {% elif teacher.USER_TEAM_CD == 5 %}
+                        창의체험부
+                    {% elif teacher.USER_TEAM_CD == 6 %}
+                        취업지원부
+                    {% elif teacher.USER_TEAM_CD == 7 %}
+                        진로상담부
+                    {% elif teacher.USER_TEAM_CD == 8 %}
+                        홍부기획부
+                    {% elif teacher.USER_TEAM_CD == 9 %}
+                        실과도제교육부
+                    {% elif teacher.USER_TEAM_CD == 10 %}
+                        스마트보안솔루션과
+                    {% elif teacher.USER_TEAM_CD == 11 %}
+                        디바이스소프트웨어과
+                    {% elif teacher.USER_TEAM_CD == 12 %}
+                        인공지능소프트웨어과
+                    {% elif teacher.USER_TEAM_CD == 13 %}
+                        게임소프트웨어과
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
     <nav aria-label="Management teacher pagination">

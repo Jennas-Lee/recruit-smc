@@ -49,42 +49,47 @@
                             실시간 지원현황
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if navbar == 'management' %}active{% endif %}" href="#" id="navbarDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            관리
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% if user_st_bit.1 == 1 %}
-                                <li><a class="dropdown-item" href="#">가접수</a></li>{% endif %}
-                            {% if user_st_bit.2 == 1 %}
-                                <li><a class="dropdown-item" href="#">원서접수</a></li>{% endif %}
-                            {% if user_st >= 3 %}
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>{% endif %}
-                            {% if user_st_bit.3 == 1 %}
-                                <li><a class="dropdown-item" href="#">포트폴리오 채점</a></li>{% endif %}
-                            {% if user_st_bit.4 == 1 %}
-                                <li><a class="dropdown-item" href="#">자기소개서 채점</a></li>{% endif %}
-                            {% if user_st_bit.5 == 1 %}
-                                <li><a class="dropdown-item" href="#">학업계획서 채점</a></li>{% endif %}
-                            {% if user_st_bit.6 == 1 %}
-                                <li><a class="dropdown-item" href="#">기초소양능력 채점</a></li>{% endif %}
-                            {% if user_st_bit.7 == 1 %}
-                                <li><a class="dropdown-item" href="#">인성 채점</a></li>{% endif %}
-                            {% if user_st_bit.8 == 1 %}
-                                <li><a class="dropdown-item" href="#">전공적성 채점</a></li>{% endif %}
-                            {% if user_st >= 256 %}
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>{% endif %}
-                            {% if user_st_bit.9 == 1 %}
-                                <li><a class="dropdown-item" href="#">학생 정보 관리</a></li>{% endif %}
-                            {% if user_st_bit.10 == 1 %}
-                                <li><a class="dropdown-item" href="/management/teacher/">교사 회원 관리</a></li>{% endif %}
-                        </ul>
-                    </li>
+                    {% if user_st > 1 %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {% if navbar == 'management' %}active{% endif %}"
+                               href="#"
+                               id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                관리
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% if user_st_bit.2 == 1 %}
+                                    <li><a class="dropdown-item" href="#">가접수</a></li>{% endif %}
+                                {% if user_st_bit.3 == 1 %}
+                                    <li><a class="dropdown-item" href="#">원서접수</a></li>{% endif %}
+                                {% if user_st >= 4 %}
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>{% endif %}
+                                {% if user_st_bit.4 == 1 %}
+                                    <li><a class="dropdown-item" href="#">포트폴리오 채점</a></li>{% endif %}
+                                {% if user_st_bit.5 == 1 %}
+                                    <li><a class="dropdown-item" href="#">자기소개서 채점</a></li>{% endif %}
+                                {% if user_st_bit.6 == 1 %}
+                                    <li><a class="dropdown-item" href="#">학업계획서 채점</a></li>{% endif %}
+                                {% if user_st_bit.7 == 1 %}
+                                    <li><a class="dropdown-item" href="#">기초소양능력 채점</a></li>{% endif %}
+                                {% if user_st_bit.8 == 1 %}
+                                    <li><a class="dropdown-item" href="#">인성 채점</a></li>{% endif %}
+                                {% if user_st_bit.9 == 1 %}
+                                    <li><a class="dropdown-item" href="#">전공적성 채점</a></li>{% endif %}
+                                {% if user_st >= 512 %}
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>{% endif %}
+                                {% if user_st_bit.10 == 1 %}
+                                    <li><a class="dropdown-item" href="#">학생 정보 관리</a></li>{% endif %}
+                                {% if user_st_bit.11 == 1 %}
+                                    <li><a class="dropdown-item" href="/management/teacher/">교사 회원 관리</a>
+                                    </li>{% endif %}
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
                 <ul class="d-flex navbar-nav">
                     <li class="nav-item">
@@ -111,7 +116,7 @@
     </nav>
 </header>
 <main role="main" class="container">
-    {% block container %}
+    {% block wrap %}
     {% endblock %}
 </main>
 </body>
