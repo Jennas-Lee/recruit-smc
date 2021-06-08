@@ -12,7 +12,9 @@ urlpatterns = [
     path('docs/', base.docs, name='docs'),
     path('status/', base.status, name='status'),
 
-    path('management/teacher/', teacher.TeacherListView.as_view(), name='management-teacher'),
+    path('management/teacher/', teacher.TeacherListView.as_view(), name='management-teacher-list'),
+    path('management/teacher/<str:user_id>', teacher.TeacherPersonalManagementView.as_view(),
+         name='management-teacher-info'),
 
     path('teacher/signin/', signin.SigninView.as_view(), name='teacher-signin'),
     path('teacher/signup/', signup.SignupView.as_view(), name='teacher-signup'),
