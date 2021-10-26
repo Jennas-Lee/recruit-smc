@@ -18,3 +18,7 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.crossed {
+    background-image: linear-gradient(to top right, transparent calc(50% - 1px), #dee2e6, transparent calc(50% + 1px));
+}

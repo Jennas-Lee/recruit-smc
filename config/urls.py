@@ -1,29 +1,28 @@
-"""config URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from recruit import views
+from recruit.views import base
+from recruit.views.index import index
+from recruit.views.info import info
+from recruit.views.recruit import recruit
+from recruit.views.teacher import signin, signup, signout
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('index/', views.index, name='index'),
-    path('auth/', views.recruit, name='auth'),
-    path('recruit/', views.recruit, name='recruit'),
-    path('confirm/', views.confirm, name='confirm'),
-    path('docs/', views.docs, name='docs'),
-    path('status/', views.status, name='status'),
+    path('', index.index, name='index'),
+    path('info/', info.info, name='info'),
+    # path('auth/', base.recruit, name='auth'),
+    path('recruit/', recruit.recruit, name='recruit'),
+    # path('confirm/', base.confirm, name='confirm'),
+    # path('docs/', base.docs, name='docs'),
+    # path('status/', base.status, name='status'),
+    #
+    # path('management/teacher/', teacher.TeacherListView.as_view(), name='management-teacher-list'),
+    # path('management/teacher/<str:user_id>', teacher.TeacherPersonalManagementView.as_view(),
+    #      name='management-teacher-info'),
+    #
+    path('teacher/signin/', signin.signin, name='teacher-signin'),
+    path('teacher/signup/', signup.SignupView.as_view(), name='teacher-signup'),
+    path('teacher/signout/', signout.signout, name='teacher-signout'),
+    #
+    # path('healthcheck/', base.healthCheck, name='health-check'),
     path('admin/', admin.site.urls),
 ]

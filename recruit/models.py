@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 
 class StdUserTb(models.Model):
@@ -15,7 +16,8 @@ class StdUserTb(models.Model):
     USER_UPDATED_YMD = models.DateTimeField(auto_now=True, null=False)
     USER_DELETED_YMD = models.DateTimeField(null=True, blank=True)
 
-    USER_RESP_TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='USER_RESP_TCR_USER', on_delete=models.RESTRICT,
+    USER_RESP_TCR_USER_IDX = models.ForeignKey('TcrUserTb', related_name='USER_RESP_TCR_USER',
+                                               on_delete=models.RESTRICT,
                                                db_column='USER_RESP_TCR_USER_IDX', null=True)
 
     def __str__(self):
@@ -114,3 +116,54 @@ class ScoreTb(models.Model):
 
     class Meta:
         db_table = u'SCORE_TB'
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, id, name, team, permission=0, password=None):
+        if not id:
+            raise ValueError(_('Users must have an id'))
+
+        user = self.model(
+            id=id,
+            name=name,
+            team=team,
+            permission=permission
+        )
+
+        user.set_password(password)
+        user.save()
+
+        return user
+
+    def create_superuser(self, id, name, team, permission, password):
+        user = self.create_user(
+            id=id,
+            name=name,
+            team=team,
+            permission=permission
+        )
+
+        user.is_superuser = True
+        user.save()
+
+        return user
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    id = models.CharField(unique=True, max_length=15, null=False)
+    name = models.CharField(max_length=20, null=False)
+    team = models.IntegerField(null=False)
+    permission = models.IntegerField(null=False)
+    is_active = models.BooleanField(default=True)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'id'
+    REQUIRED_FIELDS = ['id', 'name', 'team']
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def is_staff(self):
+        return self.is_superuser
