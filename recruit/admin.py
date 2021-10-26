@@ -5,9 +5,9 @@ from django.contrib.auth.models import Group
 from recruit.models import *
 
 
-class UserAdmin(BaseUserAdmin):
-    
-
+# class UserAdmin(BaseUserAdmin):
+#
+#
 
 # Register your models here.
 # admin.site.register(StdUserTb)
