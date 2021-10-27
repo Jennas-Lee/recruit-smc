@@ -16,14 +16,13 @@ class UserAdmin(BaseUserAdmin):
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('name',)}),
         ('Permissions', {'fields': ('permission', 'is_admin',)}),
-        ('Datetime', {'fields': ('created_at', 'updated_at',)}),
     )
-    readonly_fields = ['crated_at']
+    # readonly_fields = ('crated_at', 'updated_at')
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'name', 'password1', 'password2', 'permission')}
+            'fields': ('email', 'name', 'password1', 'password2', 'permission', 'created_at', 'updated_at')}
          ),
     )
     search_fields = ('email', 'name')

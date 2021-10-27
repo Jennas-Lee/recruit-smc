@@ -1,9 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
+
+from authentication.urls import urlpatterns as authentication_urlpatterns
 from index.urls import urlpatterns as index_urlpatterns
 
 urlpatterns = [
     path('', include(index_urlpatterns)),
+    path('auth/', include(authentication_urlpatterns)),
     # path('', index.index, name='index'),
     # path('info/', info.info, name='info'),
     # path('auth/', base.recruit, name='auth'),

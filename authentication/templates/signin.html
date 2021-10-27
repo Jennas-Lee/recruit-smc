@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        이미 로그인되어있습니다. <a href="javascript:history.back()" class="text-decoration-none">뒤로가기</a>
+    {% else %}
+        <form class="row m-auto" style="width: 300px;" id="signin-form" action="{% url 'signin' %}" method="POST">
+            {% csrf_token %}
+            <h1 class="text-center">교사 로그인</h1>
+            <div class="alert alert-warning m-auto mb-3 text-center" role="alert" style="width: 276px;">
+                학생은 사용이 불가능합니다.
+                <br>
+                교사만 이용가능합니다.
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="signin-email-input" name="email" placeholder="이메일"
+                       value="{{ email }}" required>
+                <label for="signin-email-input" style="margin-left: 11px;">이메일</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="signin-password-input" name="password"
+                       placeholder="비밀번호" value="{{ password }}" required>
+                <label for="signin-password-input" style="margin-left: 11px;">비밀번호</label>
+            </div>
+            <button class="btn btn-primary m-auto" id="signin-btn" type="submit" style="width: 276px;">
+                로그인
+            </button>
+            <a href="{% url 'signup' %}" class="text-primary text-decoration-none">교사 회원가입</a>
+            {% if alert %}
+                <div class="alert alert-danger m-auto mb-3 text-center" role="alert"
+                     style="width: 276px;">{{ alert }}</div>
+            {% endif %}
+        </form>
+    {% endif %}
+{% endblock %}

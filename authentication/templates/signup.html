@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        이미 로그인되어있습니다. <a href="javascript:history.back()" class="text-decoration-none">뒤로가기</a>
+    {% else %}
+        <form class="m-auto w-75" action="{% url 'signup' %}" method="POST">
+            {% csrf_token %}
+            <h1 class="text-center">교사 회원가입</h1>
+            <div class="alert alert-warning m-auto mb-3 text-center" role="alert">
+                학생은 사용이 불가능합니다. 교사만 이용가능합니다.
+            </div>
+            {% if alert %}
+                <div class="alert alert-danger m-auto mb-3 text-center" role="alert">{{ alert }}</div>
+            {% endif %}
+            <div class="row mb-3">
+                <label for="signup-email-input"
+                       class="col-sm-3 col-form-label">이메일</label>
+                <div class="col-sm-9">
+                    <input type="email" name="email" class="form-control" id="signup-email-input" value="{{ email }}"
+                           required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="signup-password-input"
+                       class="col-sm-3 col-form-label">비밀번호</label>
+                <div class="col-sm-9">
+                    <input type="password" name="password" class="form-control" id="signup-password-input"
+                           value="{{ password }}" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="signup-confirm-password-input"
+                       class="col-sm-3 col-form-label">비밀번호 확인</label>
+                <div class="col-sm-9">
+                    <input type="password" name="confirm-password" class="form-control"
+                           id="signup-confirm-password-input" value="{{ confirm_password }}" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="signup-name-input"
+                       class="col-sm-3 col-form-label">이름</label>
+                <div class="col-sm-9">
+                    <input type="text" name="name" class="form-control" id="signup-name-input" value="{{ name }}"
+                           required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="signup-btn">
+            <span class="spinner-border spinner-border-sm visually-hidden" id="signup-btn-spinner" role="status"
+                  aria-hidden="true"></span>
+                <span class="visually-hidden">Loading...</span>
+                회원가입
+            </button>
+        </form>
+    {% endif %}
+{% endblock %}
