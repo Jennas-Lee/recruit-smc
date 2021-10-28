@@ -13,4 +13,4 @@ def recruit(request):
     else:
         recruit_available = False
 
-    return render(request, 'recruit.html', {'navbar': 'recruit', 'recruit_available': recruit_available})
+    return render(request, 'recruit.old.html', {'navbar': 'recruit.old', 'recruit_available': recruit_available})
