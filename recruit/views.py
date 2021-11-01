@@ -1,6 +1,6 @@
 import re
 
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 from django.utils import timezone
 
 from recruit.models import Student
@@ -22,15 +22,15 @@ def index(request):
     return render(request, 'recruit_index.html', {'recruit_available': recruit_available})
 
 
-def form_info(request):
+def form_receive(request):
     if request.method == 'GET':
-        return render(request, 'recruit_form_info.html', {'recruit_available': recruit_available})
+        return render(request, 'recruit_form_receive.html', {'recruit_available': recruit_available})
 
     elif request.method == 'POST':
         name = request.POST.get('name')
         school = request.POST.get('school')
         grade = request.POST.get('grade')
-        _class = request.POST.get('_class')
+        class_ = request.POST.get('class_')
         number = request.POST.get('number')
         tel_st = request.POST.get('tel_st')
         tel_pa = request.POST.get('tel_pa')
@@ -42,7 +42,7 @@ def form_info(request):
             'name': name,
             'school': school,
             'grade': grade,
-            '_class': _class,
+            'class_': class_,
             'number': number,
             'tel_st': tel_st,
             'tel_pa': tel_pa,
@@ -56,7 +56,7 @@ def form_info(request):
         # Name Validation
         if len(name) <= 0:
             response_data['error_messages'].append('이름을 입력하세요.')
-        elif 2 > len(name) > 5:
+        elif 2 > len(name) or len(name) > 5:
             response_data['error_messages'].append('이름은 2자 이상 5자 이하로 입력해야 합니다.')
         else:
             pass
@@ -72,15 +72,16 @@ def form_info(request):
         # Grade Validation
         if len(grade) <= 0 and school != "검정고시":
             response_data['error_messages'].append('학년을 입력하세요.')
-        elif re.match(grade, '\d$') is None and school != "검정고시":
+        elif re.match(grade, '^\d$') is None and school != "검정고시":
+            print(re.match(grade, '^\d$'))
             response_data['error_messages'].append('학년을 올바르게 입력하세요.')
         else:
             pass
 
-        # _Class Validation
-        if len(_class) <= 0 and school != "검정고시":
+        # Class_ Validation
+        if len(class_) <= 0 and school != "검정고시":
             response_data['error_messages'].append('반을 입력하세요.')
-        elif re.match(_class, '^\d{1,2}$') is None and school != "검정고시":
+        elif re.match(class_, '^\d{1,2}$') is None and school != "검정고시":
             response_data['error_messages'].append('반을 올바르게 입력하세요.')
         else:
             pass
@@ -127,27 +128,35 @@ def form_info(request):
         else:
             pass
 
-        print(agree)
-        # # Agree Validation
-        # if len(confirm_password) <= 0:
-        #     response_data['error_messages'].append('비밀번호 확인을 입력하세요.')
-        # elif password != confirm_password:
-        #     response_data['error_messages'].append('비밀번호 확인이 올바르지 않습니다.')
-        # else:
-        #     pass
+        # Agree Validation
+        if agree != 'on':
+            response_data['error_messages'].append('개인정보 제공에 동의해주세요.')
+        else:
+            pass
 
         if response_data['error_messages']:
-            return render(request, 'recruit_form_info.html', response_data)
+            return render(request, 'recruit_form_receive.html', response_data)
         else:
             try:
-                student = Student(name=name, school=school, grade=grade, _class=_class, number=number, tel_st=tel_st,
+                student = Student(name=name, school=school, grade=grade, _class=class_, number=number, tel_st=tel_st,
                                   tel_pa=tel_pa, password=password)
                 student.save()
-            except Exception as e:
-                e.with_traceback()
+
+                request.session['tel_st'] = tel_st
+
+                return redirect('/recruit/documents/#info-success')
+            except:
                 HttpResponse("""
                     <script>
                         alert('오류가 발생했습니다. 다시 시도해주세요. 이 알림이 계속되면 교무실로 연락주세요.');
                         window.history.back();
                     </script>
                 """)
+
+
+def form_documents(request):
+    if request.method == 'GET':
+        return render(request, 'recruit_form_documents.html')
+
+    elif request.method == 'POST':
+        s

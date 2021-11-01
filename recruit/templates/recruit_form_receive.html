@@ -3,7 +3,7 @@
     {% if recruit_available %}
         <h1 class="text-center">원서접수</h1>
         <h2>정보 입력</h2>
-        <form action="{% url 'recruit-form-info' %}" method="POST">
+        <form action="{% url 'recruit-form-receive' %}" method="POST">
             {% csrf_token %}
             <div class="row mb-3">
                 <label for="inputName" class="col-sm-2 col-form-label">이름</label>
@@ -15,42 +15,42 @@
             <div class="row mb-3">
                 <label for="inputSchool" class="col-sm-2 col-form-label">학교</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputSchool" maxlength="5" name="school"
+                    <input type="text" class="form-control" id="inputSchool" maxlength="30" name="school"
                            placeholder="검정고시는 '검정고시'를 입력하세요." value="{{ school }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputGrade" class="col-sm-2 col-form-label">학년</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputGrade" maxlength="5" name="grade"
+                    <input type="text" class="form-control" id="inputGrade" maxlength="1" name="grade"
                            placeholder="검정고시는 입력하지 마세요." value="{{ grade }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="input_Class" class="col-sm-2 col-form-label">반</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="input_Class" maxlength="5" name="_class"
-                           placeholder="검정고시는 입력하지 마세요." value="{{ _class }}">
+                    <input type="text" class="form-control" id="input_Class" maxlength="2" name="class_"
+                           placeholder="검정고시는 입력하지 마세요." value="{{ class_ }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputNumber" class="col-sm-2 col-form-label">번호</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNumber" maxlength="5" name="number"
+                    <input type="text" class="form-control" id="inputNumber" maxlength="2" name="number"
                            placeholder="검정고시는 입력하지 마세요." value="{{ number }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputTel_st" class="col-sm-2 col-form-label">학생 전화번호</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputTel_st" maxlength="5" name="tel_st"
+                    <input type="text" class="form-control" id="inputTel_st" maxlength="11" name="tel_st"
                            placeholder="-를 제외한 숫자만 입력하세요." value="{{ tel_st }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputTel_pa" class="col-sm-2 col-form-label">학부모 전화번호</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputTel_pa" maxlength="4" name="tel_pa"
+                    <input type="text" class="form-control" id="inputTel_pa" maxlength="11" name="tel_pa"
                            placeholder="-를 제외한 숫자만 입력하세요." value="{{ tel_pa }}" required>
                 </div>
             </div>
@@ -72,7 +72,8 @@
             <div class="row mb-3">
                 <div class="col-sm-10 offset-sm-2">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="inputAgree" name="agree" value="{{ agree }}" required>
+                        <input class="form-check-input" type="checkbox" id="inputAgree" name="agree"
+                               {% if agree %}checked{% endif %} required>
                         <label class="form-check-label" for="inputAgree">
                             원서 접수를 위한 개인정보 제공에 동의합니다.
                         </label>

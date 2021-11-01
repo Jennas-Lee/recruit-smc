@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block contents %}
+    {% if recruit_available %}
+        <h1 class="text-center">원서접수</h1>
+        <h2>자료 입력</h2>
+        <form action="{% url 'recruit-form-documents' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="row mb-3">
+                {% for error in error_messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="float-end">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    접수 취소
+                </button>
+                <button type="submit" class="btn btn-primary">접수하기</button>
+            </div>
+        </form>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">원서접수를 취소하시겠습니까?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        원서접수를 취소하면 입력했던 정보를 잃어버리게 됩니다.
+                        <br>
+                        정말로 취소하시겠습니까?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <a href="{% url 'recruit-index' %}" class="btn btn-danger">접수 취소하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="text-danger text-center">접수가능한 날짜가 아닙니다.</h1>
+    {% endif %}
+{% endblock %}
