@@ -9,74 +9,83 @@
                 <label for="inputName" class="col-sm-2 col-form-label">이름</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputName" maxlength="5" name="name"
-                           placeholder="이름은 5자까지 입력할 수 있습니다." required>
+                           placeholder="이름은 5자까지 입력할 수 있습니다." value="{{ name }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputSchool" class="col-sm-2 col-form-label">학교</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputSchool" maxlength="5" name="name"
-                           placeholder="검정고시는 '검정고시'를 입력하세요." required>
+                    <input type="text" class="form-control" id="inputSchool" maxlength="5" name="school"
+                           placeholder="검정고시는 '검정고시'를 입력하세요." value="{{ school }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputGrade" class="col-sm-2 col-form-label">학년</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputGrade" maxlength="5" name="grade"
-                           placeholder="검정고시는 입력하지 마세요.">
+                           placeholder="검정고시는 입력하지 마세요." value="{{ grade }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="input_Class" class="col-sm-2 col-form-label">반</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="input_Class" maxlength="5" name="_class"
-                           placeholder="검정고시는 입력하지 마세요.">
+                           placeholder="검정고시는 입력하지 마세요." value="{{ _class }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputNumber" class="col-sm-2 col-form-label">번호</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputNumber" maxlength="5" name="number"
-                           placeholder="검정고시는 입력하지 마세요.">
+                           placeholder="검정고시는 입력하지 마세요." value="{{ number }}">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputTel_st" class="col-sm-2 col-form-label">학생 전화번호</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputTel_st" maxlength="5" name="tel_st"
-                           placeholder="-를 제외한 숫자만 입력하세요." required>
+                           placeholder="-를 제외한 숫자만 입력하세요." value="{{ tel_st }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputTel_pa" class="col-sm-2 col-form-label">학부모 전화번호</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputTel_pa" maxlength="4" name="tel_pa"
-                           placeholder="-를 제외한 숫자만 입력하세요." required>
+                           placeholder="-를 제외한 숫자만 입력하세요." value="{{ tel_pa }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" id="inputPassword" maxlength="4"
-                           name="password" placeholder="접수 확인을 위해 사용하는 비밀번호입니다. 임의의 숫자 4자리를 입력하세요." required>
+                           name="password" placeholder="접수 확인을 위해 사용하는 비밀번호입니다. 임의의 숫자 4자리를 입력하세요."
+                           value="{{ password }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputConfirmPassword" class="col-sm-2 col-form-label">비밀번호 확인</label>
                 <div class="col-sm-10">
                     <input type="password" class="form-control" id="inputConfirmPassword" maxlength="4"
-                           name="confirm_password" required>
+                           name="confirm_password" value="{{ confirm_password }}" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col-sm-10 offset-sm-2">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="inputAgree" required>
+                        <input class="form-check-input" type="checkbox" id="inputAgree" name="agree" value="{{ agree }}" required>
                         <label class="form-check-label" for="inputAgree">
                             원서 접수를 위한 개인정보 제공에 동의합니다.
                         </label>
                     </div>
                 </div>
+            </div>
+            <div class="row mb-3">
+                {% for error in error_messages %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
             </div>
             <div class="float-end">
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
