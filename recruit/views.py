@@ -1,6 +1,6 @@
 import re
 
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, reverse, HttpResponse
 from django.utils import timezone
 
 from recruit.models import Student
@@ -72,8 +72,9 @@ def form_receive(request):
         # Grade Validation
         if len(grade) <= 0 and school != "검정고시":
             response_data['error_messages'].append('학년을 입력하세요.')
-        elif re.match(grade, '^\d$') is None and school != "검정고시":
-            print(re.match(grade, '^\d$'))
+        elif re.match('^\\d$', grade) is None and school != "검정고시":
+            print(re.match(grade, '^\\d$'))
+            print(grade)
             response_data['error_messages'].append('학년을 올바르게 입력하세요.')
         else:
             pass
@@ -81,7 +82,7 @@ def form_receive(request):
         # Class_ Validation
         if len(class_) <= 0 and school != "검정고시":
             response_data['error_messages'].append('반을 입력하세요.')
-        elif re.match(class_, '^\d{1,2}$') is None and school != "검정고시":
+        elif re.match('^\\d{1,2}$', class_) is None and school != "검정고시":
             response_data['error_messages'].append('반을 올바르게 입력하세요.')
         else:
             pass
@@ -89,7 +90,7 @@ def form_receive(request):
         # Number Validation
         if len(number) <= 0 and school != "검정고시":
             response_data['error_messages'].append('번호를 입력하세요.')
-        elif re.match(number, '^\d{1,2}$') is None and school != "검정고시":
+        elif re.match('^\\d{1,2}$', number) is None and school != "검정고시":
             response_data['error_messages'].append('번호를 올바르게 입력하세요.')
         else:
             pass
@@ -97,7 +98,7 @@ def form_receive(request):
         # Tel_st Validation
         if len(tel_st) <= 0:
             response_data['error_messages'].append('학생 전화번호를 입력하세요.')
-        elif re.match(tel_st, '^01\d{8,9}$') is None:
+        elif re.match('^01\\d{8,9}$', tel_st) is None:
             response_data['error_messages'].append('학생 전화번호를 올바르게 입력하세요.')
         elif Student.objects.filter(tel_st=tel_st).count() > 0:
             response_data['error_messages'].append('이미 접수가 진행된 전화번호입니다. 접수 결과를 조회하세요.')
@@ -107,7 +108,7 @@ def form_receive(request):
         # Tel_pa Validation
         if len(tel_pa) <= 0:
             response_data['error_messages'].append('학부모 전화번호를 입력하세요.')
-        elif re.match(tel_pa, '^01\d{8,9}$') is None:
+        elif re.match('^01\\d{8,9}$', tel_pa) is None:
             response_data['error_messages'].append('학부모 전화번호를 올바르게 입력하세요.')
         else:
             pass
@@ -115,7 +116,7 @@ def form_receive(request):
         # Password Validation
         if len(password) <= 0:
             response_data['error_messages'].append('비밀번호를 입력하세요.')
-        elif re.match(password, '^\d{4}$') is None:
+        elif re.match('^\\d{4}$', password) is None:
             response_data['error_messages'].append('올바른 비밀번호를 입력하세요. 숫자 4자리를 입력하세요.')
         else:
             pass
@@ -144,7 +145,7 @@ def form_receive(request):
 
                 request.session['tel_st'] = tel_st
 
-                return redirect('/recruit/documents/#info-success')
+                return reverse('recruit-form-documents')
             except:
                 HttpResponse("""
                     <script>
@@ -156,7 +157,23 @@ def form_receive(request):
 
 def form_documents(request):
     if request.method == 'GET':
-        return render(request, 'recruit_form_documents.html')
+        response_data = {
+            'recruit_available': recruit_available,
+            'name': None,
+            'school': None
+        }
+        if request.session.get('tel_st'):
+            student = Student.objects.filter(tel_st=request.session.get('tel_st'))
+
+            if student.count():
+                response_data['name'] = student.get().name
+                response_data['school'] = student.get().school
+            else:
+                pass
+        else:
+            pass
+
+        return render(request, 'recruit_form_documents.html', response_data)
 
     elif request.method == 'POST':
         s
