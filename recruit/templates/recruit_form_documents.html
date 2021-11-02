@@ -2,36 +2,92 @@
 {% block contents %}
     {% if recruit_available %}
         <h1 class="text-center">원서접수</h1>
-        <h2>자료 입력(<span id="student-info" class="text-danger">{{ school }} {{ name }}</span>)</h2>
-        <form action="{% url 'recruit-form-documents' %}" method="POST">
-            {% csrf_token %}
-            <div class="row mb-3">
-                {% for error in error_messages %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ error }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {% if name and school %}
+            <h2>자료 입력(<span id="student-info" class="text-primary">{{ school }} {{ name }}</span>)</h2>
+            <form id="recruit-documents-form">
+                {% csrf_token %}
+                <div class="row mb-3">
+                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">자기소개서 및 학업계획서</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputDocuIntegrated" name="docu_integrated"
+                               required>
+                        <div id="passwordHelpBlock" class="form-text">
+                            자기소개서 및 학업계획서는 반드시 한글 파일(.hwp)로 제출해야 합니다.
+                        </div>
                     </div>
-                {% endfor %}
-            </div>
-            <div class="float-end">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    접수 취소
-                </button>
-                <button type="submit" class="btn btn-primary">접수하기</button>
-            </div>
-        </form>
-        <script>
-            window.onload = () => {
+                </div>
+                <div class="row mb-3">
+                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">온라인 SW 아카데미 수료증</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputCertOnline" name="cert_online">
+                        <div id="passwordHelpBlock" class="form-text">
+                            2020년 이후 온라인으로 진행된 SW 아카데미만 해당됩니다.
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">SW 아카데미 수료증</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputCertOffline" name="cert_offline">
+                        <div id="passwordHelpBlock" class="form-text">
+                            2019년 이전에 진행된 오프라인 SW 아카데미만 해당됩니다.
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">자격증</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputCertLicense" name="cert_license">
+                        <div id="passwordHelpBlock" class="form-text">
+                            파일이 여러개일 경우 압축해서 업로드하시기 바랍니다.
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    {% for error in error_messages %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="float-end">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                        접수 취소
+                    </button>
+                    <button type="submit" class="btn btn-primary">접수하기</button>
+                    <button type="button" onclick="
+                        const xhr = new XMLHttpRequest();
+                        let data = new FormData();
+
+                        data.append('csrfmiddlewaretoken', document.getElementsByName('csrfmiddlewaretoken').item(0).value)
+
+                        xhr.open('post', '/recruit/ajax/', true);
+                        xhr.send(data);
+                    "
+                    >ajax 테스트
+                    </button>
+                </div>
+            </form>
+            <script>
                 let student_info = document.getElementById('student-info');
 
-                while(true) {
-                    student_info.classList.replace('text-danger', 'text-primary');
-                    setTimeout(() => {}, 500);
-                    student_info.classList.replace('text-primary', 'text-danget');
-                    setTimeout(() => {}, 500);
-                }
-            }
-        </script>
+                setInterval(() => {
+                    if (student_info.classList.contains('text-danger')) {
+                        student_info.classList.replace('text-danger', 'text-primary');
+                    } else {
+                        student_info.classList.replace('text-primary', 'text-danger');
+                    }
+                    setTimeout(() => {
+                    }, 500);
+                }, 1000);
+            </script>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                <a href="#" class="alert-link">이곳에서</a> 먼저 접수 확인을 해주시기 바랍니다.
+            </div>
+        {% endif %}
     {% else %}
         <h1 class="text-danger text-center">접수가능한 날짜가 아닙니다.</h1>
     {% endif %}

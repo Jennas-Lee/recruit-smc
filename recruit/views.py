@@ -1,6 +1,6 @@
 import re
 
-from django.shortcuts import render, reverse, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 from django.utils import timezone
 
 from recruit.models import Student
@@ -29,9 +29,9 @@ def form_receive(request):
     elif request.method == 'POST':
         name = request.POST.get('name')
         school = request.POST.get('school')
-        grade = request.POST.get('grade')
-        class_ = request.POST.get('class_')
-        number = request.POST.get('number')
+        grade = request.POST.get('grade', None)
+        class_ = request.POST.get('class_', None)
+        number = request.POST.get('number', None)
         tel_st = request.POST.get('tel_st')
         tel_pa = request.POST.get('tel_pa')
         password = request.POST.get('password')
@@ -70,27 +70,25 @@ def form_receive(request):
             pass
 
         # Grade Validation
-        if len(grade) <= 0 and school != "검정고시":
+        if school != "검정고시" and len(grade) <= 0:
             response_data['error_messages'].append('학년을 입력하세요.')
-        elif re.match('^\\d$', grade) is None and school != "검정고시":
-            print(re.match(grade, '^\\d$'))
-            print(grade)
+        elif school != "검정고시" and re.match('^\\d$', grade) is None:
             response_data['error_messages'].append('학년을 올바르게 입력하세요.')
         else:
             pass
 
         # Class_ Validation
-        if len(class_) <= 0 and school != "검정고시":
+        if school != "검정고시" and len(class_) <= 0:
             response_data['error_messages'].append('반을 입력하세요.')
-        elif re.match('^\\d{1,2}$', class_) is None and school != "검정고시":
+        elif school != "검정고시" and re.match('^\\d{1,2}$', class_) is None:
             response_data['error_messages'].append('반을 올바르게 입력하세요.')
         else:
             pass
 
         # Number Validation
-        if len(number) <= 0 and school != "검정고시":
+        if school != "검정고시" and len(number) <= 0:
             response_data['error_messages'].append('번호를 입력하세요.')
-        elif re.match('^\\d{1,2}$', number) is None and school != "검정고시":
+        elif school != "검정고시" and re.match('^\\d{1,2}$', number) is None:
             response_data['error_messages'].append('번호를 올바르게 입력하세요.')
         else:
             pass
@@ -145,7 +143,7 @@ def form_receive(request):
 
                 request.session['tel_st'] = tel_st
 
-                return reverse('recruit-form-documents')
+                return redirect('/recruit/documents/')
             except:
                 HttpResponse("""
                     <script>
@@ -177,3 +175,9 @@ def form_documents(request):
 
     elif request.method == 'POST':
         s
+
+
+def ajax(request):
+    if request.method == 'POST':
+        print("SUCCESS")
+        return HttpResponse()
