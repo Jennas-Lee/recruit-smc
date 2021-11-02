@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block contents %}
     {% if recruit_available %}
         <h1 class="text-center">원서접수</h1>
@@ -70,6 +71,8 @@
                     </button>
                 </div>
             </form>
+            <script>let url = {% url 'recruit-form-documents' %}</script>
+            <script src="{% static 'js/recruitDocument.js' %}"></script>
             <script>
                 let student_info = document.getElementById('student-info');
 

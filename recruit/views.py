@@ -174,10 +174,4 @@ def form_documents(request):
         return render(request, 'recruit_form_documents.html', response_data)
 
     elif request.method == 'POST':
-        s
-
-
-def ajax(request):
-    if request.method == 'POST':
-        print("SUCCESS")
         return HttpResponse()
