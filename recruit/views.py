@@ -1,9 +1,13 @@
+import os
 import re
+import boto3
 
 from django.shortcuts import render, redirect, HttpResponse
 from django.utils import timezone
 
-from recruit.models import Student
+from config.settings import AWS_S3_BUCKET
+
+from recruit.models import Student, Document
 
 start_timestamp = 1637625600
 end_timestamp = 1637740800
@@ -174,4 +178,58 @@ def form_documents(request):
         return render(request, 'recruit_form_documents.html', response_data)
 
     elif request.method == 'POST':
-        return HttpResponse()
+        response_data = {
+            'error_messages': "",
+            'status_code': 0
+        }
+
+        if request.session.get('tel_st') and Student.objects.filter(tel_st=request.session.get('tel_st')).count():
+            student = Student.objects.filter(tel_st=request.session.get('tel_st')).first()
+            files_data = {
+                'docu_integrated': {
+                    'file': request.FILES.get('docu_integrated', None),
+                    'name': "[자기소개서 및 학업계획서] " + student.school + " " + student.name
+                },
+                'cert_online': {
+                    'file': request.FILES.get('cert_online', None),
+                    'name': "[온라인 SW 아카데미] " + student.school + " " + student.name
+                },
+                'cert_offline': {
+                    'file': request.FILES.get('cert_offline', None),
+                    'name': "[SW 아카데미] " + student.school + " " + student.name
+                },
+                'cert_license': {
+                    'file': request.FILES.get('cert_license', None),
+                    'name': "[자격증] " + student.school + " " + student.name
+                },
+            }
+            url = '/' + now_timestamp + '/' + str(student.pk) + '/'
+
+            try:
+                client = boto3.client('s3')
+                for key, values in files_data.items():
+                    if key == 'docu_integrated' and values['file'] is None:
+                        response_data['error_messages'] = "자기소개서 및 학업계획서를 선택해주세요."
+                        response_data['status_code'] = 400
+                        break
+                    else:
+                        document = Document()
+                        if values['file']:
+                            root, extension = os.path.splitext(values['files'])
+                            filename = values['name'] + extension
+                            full_url = url + filename
+                            client.upload_fileobj(
+                                values['file'],
+                                AWS_S3_BUCKET,
+                                full_url,
+                                ExtraArgs={
+                                    "ContentType": values['file'].content_type
+                                }
+                            )
+            except:
+                response_data['status_code'] = 500
+        else:
+            response_data['error_messages'] = "<a href=\"#\" class=\"alert-link\">이곳에서</a> 먼저 접수 확인을 해주시기 바랍니다."
+            response_data['status_code'] = 400
+
+        return HttpResponse(response_data, status=response_data['status_code'])
