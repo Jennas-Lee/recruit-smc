@@ -22,3 +22,18 @@
 .crossed {
     background-image: linear-gradient(to top right, transparent calc(50% - 1px), #dee2e6, transparent calc(50% + 1px));
 }
+
+.hangeul-download-btn {
+    background-color: #209ddf;
+    color: #ffffff;
+}
+
+.hangeul-download-btn > img {
+    width: 18px;
+    height: 18px;
+}
+
+.pdf-download-btn {
+    background-color: #ff0000;
+    color: #ffffff;
+}

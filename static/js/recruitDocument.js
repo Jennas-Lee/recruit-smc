@@ -14,7 +14,10 @@ document.getElementById('recruit-documents-form').addEventListener('submit', (ev
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
                 // 성공
+            } else if(xhr.status === 400) {
+                // 실패
             } else {
+                // 서버 실패
                 console.log(xhr.status);
                 alert('오류가 발생했습니다. 다시 시도해주세요. 이 알림이 계속되면 교무실로 연락주세요.');
             }

@@ -5,7 +5,7 @@ import boto3
 from django.shortcuts import render, redirect, HttpResponse
 from django.utils import timezone
 
-from config.settings import AWS_S3_BUCKET
+from config.settings import AWS_S3_BUCKET, STATIC_CDN_LINK
 
 from recruit.models import Student, Document
 
@@ -207,17 +207,22 @@ def form_documents(request):
 
             try:
                 client = boto3.client('s3')
+                document = Document()
+                document.student_id = student.pk
+
                 for key, values in files_data.items():
                     if key == 'docu_integrated' and values['file'] is None:
                         response_data['error_messages'] = "자기소개서 및 학업계획서를 선택해주세요."
                         response_data['status_code'] = 400
                         break
+
                     else:
-                        document = Document()
                         if values['file']:
                             root, extension = os.path.splitext(values['files'])
                             filename = values['name'] + extension
                             full_url = url + filename
+                            cdn_url = STATIC_CDN_LINK + full_url
+
                             client.upload_fileobj(
                                 values['file'],
                                 AWS_S3_BUCKET,
@@ -226,6 +231,19 @@ def form_documents(request):
                                     "ContentType": values['file'].content_type
                                 }
                             )
+
+                            if key == 'docu_integrated':
+                                document.docu_integrated = cdn_url
+                            elif key == 'cert_online':
+                                document.cert_online = cdn_url
+                            elif key == 'cert_offline':
+                                document.cert_online = cdn_url
+                            elif key == 'cert_license':
+                                document.cert_license = cdn_url
+
+                document.save()
+                response_data['status_code'] = 200
+
             except:
                 response_data['status_code'] = 500
         else:

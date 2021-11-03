@@ -124,4 +124,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.User'
 
-AWS_S3_BUCKET = os.getenv('s3_bucket')
+AWS_S3_BUCKET = os.getenv('aws_s3_bucket')
+STATIC_CDN_LINK = os.getenv('static_cdn_link')
