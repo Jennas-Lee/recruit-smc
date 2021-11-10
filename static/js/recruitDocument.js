@@ -1,3 +1,15 @@
+let student_info = document.getElementById('student-info');
+
+setInterval(() => {
+    if (student_info.classList.contains('text-danger')) {
+        student_info.classList.replace('text-danger', 'text-primary');
+    } else {
+        student_info.classList.replace('text-primary', 'text-danger');
+    }
+    setTimeout(() => {
+    }, 500);
+}, 1000);
+
 document.getElementById('recruit-documents-form').addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -14,7 +26,8 @@ document.getElementById('recruit-documents-form').addEventListener('submit', (ev
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
                 // 성공
-            } else if(xhr.status === 400) {
+                alert('성공');
+            } else if (xhr.status === 400) {
                 // 실패
             } else {
                 // 서버 실패

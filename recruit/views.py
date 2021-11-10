@@ -203,7 +203,7 @@ def form_documents(request):
                     'name': "[자격증] " + student.school + " " + student.name
                 },
             }
-            url = '/' + now_timestamp + '/' + str(student.pk) + '/'
+            url = '/' + str(now_timestamp) + '/' + str(student.pk) + '/'
 
             try:
                 client = boto3.client('s3')

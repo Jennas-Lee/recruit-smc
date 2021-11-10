@@ -58,34 +58,10 @@
                         접수 취소
                     </button>
                     <button type="submit" class="btn btn-primary">접수하기</button>
-                    <button type="button" onclick="
-                        const xhr = new XMLHttpRequest();
-                        let data = new FormData();
-
-                        data.append('csrfmiddlewaretoken', document.getElementsByName('csrfmiddlewaretoken').item(0).value)
-
-                        xhr.open('post', '/recruit/ajax/', true);
-                        xhr.send(data);
-                    "
-                    >ajax 테스트
-                    </button>
                 </div>
             </form>
-            <script>let url = {% url 'recruit-form-documents' %}</script>
+            <script>let url = "{% url 'recruit-form-documents' %}"</script>
             <script src="{% static 'js/recruitDocument.js' %}"></script>
-            <script>
-                let student_info = document.getElementById('student-info');
-
-                setInterval(() => {
-                    if (student_info.classList.contains('text-danger')) {
-                        student_info.classList.replace('text-danger', 'text-primary');
-                    } else {
-                        student_info.classList.replace('text-primary', 'text-danger');
-                    }
-                    setTimeout(() => {
-                    }, 500);
-                }, 1000);
-            </script>
         {% else %}
             <div class="alert alert-danger" role="alert">
                 <a href="#" class="alert-link">이곳에서</a> 먼저 접수 확인을 해주시기 바랍니다.
