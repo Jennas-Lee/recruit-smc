@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block contents %}
+    <h1 class="text-center">접수확인</h1>
+    <div class="row mb-3">
+        <label for="inputName" class="col-sm-3 col-form-label">이름</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputName">
+                {{ name }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputStCode" class="col-sm-3 col-form-label">수험번호</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputStCode">
+                {{ name }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputSchool" class="col-sm-3 col-form-label">학교</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputSchool">
+                {{ school }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputGrade" class="col-sm-3 col-form-label">학년</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputGrade">
+                {{ grade }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="input_Class" class="col-sm-3 col-form-label">반</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="input_Class">
+                {{ class_ }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputNumber" class="col-sm-3 col-form-label">번호</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputNumber">
+                {{ number }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTel_st" class="col-sm-3 col-form-label">학생 전화번호</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputTel_st">
+                {{ tel_st }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTel_pa" class="col-sm-3 col-form-label">학부모 전화번호</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputTel_pa">
+                {{ tel_pa }}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTel_pa" class="col-sm-3 col-form-label">자기소개서 및 학업계획서</label>
+        <div class="col-sm-9">
+            <a href="{{ docu_integrated }}" class="btn btn-primary" download>다운로드</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTel_pa" class="col-sm-3 col-form-label">온라인 SW 아카데미 수료증</label>
+        <div class="col-sm-9">
+            {% if cert_online %}
+                <a href="{{ cert_online }}" class="btn btn-primary" download>다운로드</a>
+            {% else %}
+                <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTel_pa" class="col-sm-3 col-form-label">SW 아카데미 수료증</label>
+        <div class="col-sm-9">
+            {% if cert_offline %}
+                <a href="{{ cert_offline }}" class="btn btn-primary" download>다운로드</a>
+            {% else %}
+                <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputTel_pa" class="col-sm-3 col-form-label">자격증</label>
+        <div class="col-sm-9">
+            {% if cert_license %}
+                <a href="{{ cert_license }}" class="btn btn-primary" download>다운로드</a>
+            {% else %}
+                <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -35,8 +35,8 @@
                            href="{% url 'recruit-index' %}">원서접수</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if navbar == 'confirm' %}active{% endif %}" aria-current="page"
-                           href="/confirm/">접수확인</a>
+                        <a class="nav-link{% if 'check' in request.path %} active{% endif %}" aria-current="page"
+                           href="{% url 'check-index' %}">접수확인</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if navbar == 'docs' %}active{% endif %}" aria-current="page"

@@ -1,8 +1,10 @@
 import os
+import traceback
 import re
 import boto3
 
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from django.utils import timezone
 
 from config.settings import AWS_S3_BUCKET, STATIC_CDN_LINK
@@ -20,6 +22,10 @@ else:
 
 # TODO: Update recruit_available
 recruit_available = True
+
+
+class NotFoundDocuIntegratedException(Exception):
+    pass
 
 
 def index(request):
@@ -203,22 +209,20 @@ def form_documents(request):
                     'name': "[자격증] " + student.school + " " + student.name
                 },
             }
-            url = '/' + str(now_timestamp) + '/' + str(student.pk) + '/'
+            url = '/' + str(int(now_timestamp)) + '/' + str(student.pk) + '/'
 
             try:
                 client = boto3.client('s3')
                 document = Document()
-                document.student_id = student.pk
+                document.student_id = student
 
                 for key, values in files_data.items():
                     if key == 'docu_integrated' and values['file'] is None:
-                        response_data['error_messages'] = "자기소개서 및 학업계획서를 선택해주세요."
-                        response_data['status_code'] = 400
-                        break
+                        raise NotFoundDocuIntegratedException
 
                     else:
                         if values['file']:
-                            root, extension = os.path.splitext(values['files'])
+                            root, extension = os.path.splitext(values['file'].name)
                             filename = values['name'] + extension
                             full_url = url + filename
                             cdn_url = STATIC_CDN_LINK + full_url
@@ -244,10 +248,20 @@ def form_documents(request):
                 document.save()
                 response_data['status_code'] = 200
 
-            except:
+            except NotFoundDocuIntegratedException:
+                response_data['error_messages'] = "자기소개서 및 학업계획서를 선택해주세요."
+                response_data['status_code'] = 400
+
+            except Exception:
+                traceback.print_exc()
                 response_data['status_code'] = 500
+
+            finally:
+                pass
+
         else:
             response_data['error_messages'] = "<a href=\"#\" class=\"alert-link\">이곳에서</a> 먼저 접수 확인을 해주시기 바랍니다."
             response_data['status_code'] = 400
 
-        return HttpResponse(response_data, status=response_data['status_code'])
+        return JsonResponse(response_data, status=response_data['status_code'],
+                            json_dumps_params={'ensure_ascii': False})

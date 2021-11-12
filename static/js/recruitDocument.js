@@ -10,6 +10,23 @@ setInterval(() => {
     }, 500);
 }, 1000);
 
+const createAlert = (message) => {
+    const alert = document.createElement('div');
+    const closeBtn = document.createElement('button');
+
+    closeBtn.setAttribute('type', 'button');
+    closeBtn.setAttribute('class', 'btn-close');
+    closeBtn.setAttribute('data-bs-dismiss', 'alert');
+    closeBtn.setAttribute('aria-label', 'Close');
+
+    alert.setAttribute('class', 'alert alert-danger alert-dismissible fade show');
+    alert.setAttribute('role', 'alert');
+    alert.innerText = message;
+    alert.appendChild(closeBtn);
+
+    document.getElementById('alert').appendChild(alert);
+}
+
 document.getElementById('recruit-documents-form').addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -25,10 +42,10 @@ document.getElementById('recruit-documents-form').addEventListener('submit', (ev
     xhr.onreadystatechange = () => {
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
-                // 성공
-                alert('성공');
+                alert('원서접수에 성공했습니다. 감사합니다.');
+                location.href = '/';
             } else if (xhr.status === 400) {
-                // 실패
+                createAlert(JSON.parse(xhr.responseText)['error_messages']);
             } else {
                 // 서버 실패
                 console.log(xhr.status);
