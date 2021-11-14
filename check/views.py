@@ -18,6 +18,9 @@ def check_status(request):
 
         response_data = {
             'name': student.name,
+            'neis_number': student.neis_number,
+            'first_major': student.first_major,
+            'second_major': student.second_major,
             'school': student.school,
             'grade': student.grade,
             'class_': student._class,

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        <h1 class="text-center">수험번호 부여 및 채점</h1>
+        <h2>
+            현재 허가받은 권한 :
+            {% if request.user.permission == 1 %}
+                수험번호 부여
+            {% elif request.user.permission == 2 %}
+                포트폴리오 채점
+            {% elif request.user.permission == 3 %}
+                자기소개서 채점
+            {% elif request.user.permission == 4 %}
+                학업계획서 채점
+            {% elif request.user.permission == 5 %}
+                기초소양능력 채점
+            {% elif request.user.permission == 6 %}
+                인성 채점
+            {% elif request.user.permission == 7 %}
+                전공적성 채점
+            {% elif request.user.permission == 8 %}
+                관리자
+            {% endif %}
+        </h2>
+        <div class="text-center">
+            <a href="{% url 'score-student-list' %}" class="btn btn-primary">
+            {% if request.user.permission == 1 %}
+                수험번호 부여</a>
+            {% elif request.user.permission == 2 %}
+                포트폴리오 채점</a>
+            {% elif request.user.permission == 3 %}
+                자기소개서 채점</a>
+            {% elif request.user.permission == 4 %}
+                학업계획서 채점</a>
+            {% elif request.user.permission == 5 %}
+                기초소양능력 채점</a>
+            {% elif request.user.permission == 6 %}
+                인성 채점</a>
+            {% elif request.user.permission == 7 %}
+                전공적성 채점</a>
+            {% elif request.user.permission == 8 %}
+                학생 목록 관리</a>
+                <a href="" class="btn btn-success">교사 목록 관리</a>
+                <a href="" class="btn btn-info">교사 승인 요청</a>
+                <a href="" class="btn btn-danger">교사 승인 거부</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            허가받은 교사만 사용가능한 기능입니다.
+        </div>
+    {% endif %}
+{% endblock %}

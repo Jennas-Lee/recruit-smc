@@ -3,6 +3,9 @@ from django.db import models
 
 class Student(models.Model):
     name = models.CharField(null=False, max_length=5)
+    neis_number = models.CharField(null=True, blank=True, max_length=8, unique=True)
+    first_major = models.CharField(null=False, max_length=1)
+    second_major = models.CharField(null=False, max_length=1, default='0')
     school = models.CharField(null=False, max_length=30)
     grade = models.CharField(null=True, blank=True, max_length=1)
     _class = models.CharField(null=True, blank=True, max_length=2)

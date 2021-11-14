@@ -38,6 +38,8 @@ def form_receive(request):
 
     elif request.method == 'POST':
         name = request.POST.get('name')
+        first_major = request.POST.get('first_major')
+        second_major = request.POST.get('second_major')
         school = request.POST.get('school')
         grade = request.POST.get('grade', None)
         class_ = request.POST.get('class_', None)
@@ -50,6 +52,8 @@ def form_receive(request):
 
         response_data = {
             'name': name,
+            'first_major': first_major,
+            'second_major': second_major,
             'school': school,
             'grade': grade,
             'class_': class_,
@@ -68,6 +72,20 @@ def form_receive(request):
             response_data['error_messages'].append('이름을 입력하세요.')
         elif 2 > len(name) or len(name) > 5:
             response_data['error_messages'].append('이름은 2자 이상 5자 이하로 입력해야 합니다.')
+        else:
+            pass
+
+        # First Major Validation
+        if int(first_major) == 0:
+            response_data['error_messages'].append('1지망 학과를 반드시 선택하세요.')
+        elif 0 > int(first_major) or int(first_major) > 5:
+            response_data['error_messages'].append('1지망 학과를 올바르게 선택하세요.')
+        else:
+            pass
+
+        # Second Major Validation
+        if -1 > int(second_major) or int(second_major) > 5:
+            response_data['error_messages'].append('2지망 학과를 올바르게 선택하세요.')
         else:
             pass
 
@@ -147,15 +165,16 @@ def form_receive(request):
             return render(request, 'recruit_form_receive.html', response_data)
         else:
             try:
-                student = Student(name=name, school=school, grade=grade, _class=class_, number=number, tel_st=tel_st,
-                                  tel_pa=tel_pa, password=password)
+                student = Student(name=name, first_major=first_major, second_major=second_major, school=school,
+                                  grade=grade, _class=class_, number=number, tel_st=tel_st, tel_pa=tel_pa,
+                                  password=password)
                 student.save()
 
                 request.session['tel_st'] = tel_st
 
                 return redirect('/recruit/documents/')
             except:
-                HttpResponse("""
+                return HttpResponse("""
                     <script>
                         alert('오류가 발생했습니다. 다시 시도해주세요. 이 알림이 계속되면 교무실로 연락주세요.');
                         window.history.back();
@@ -209,7 +228,7 @@ def form_documents(request):
                     'name': "[자격증] " + student.school + " " + student.name
                 },
             }
-            url = '/' + str(int(now_timestamp)) + '/' + str(student.pk) + '/'
+            url = 'student/' + str(int(now_timestamp)) + '/' + str(student.pk) + '/'
 
             try:
                 client = boto3.client('s3')
@@ -241,7 +260,7 @@ def form_documents(request):
                             elif key == 'cert_online':
                                 document.cert_online = cdn_url
                             elif key == 'cert_offline':
-                                document.cert_online = cdn_url
+                                document.cert_offline = cdn_url
                             elif key == 'cert_license':
                                 document.cert_license = cdn_url
 

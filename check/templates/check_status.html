@@ -10,10 +10,56 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="inputStCode" class="col-sm-3 col-form-label">수험번호</label>
+        <label for="inputNeisNumber" class="col-sm-3 col-form-label">수험번호</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputNeisNumber">
+                {% if neis_number %}
+                    {{ neis_number }}
+                {% else %}
+                    수험번호가 아직 할당되지 않았습니다.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputFirstMajor" class="col-sm-3 col-form-label">1지망</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputFirstMajor">
+                {% if first_major == '1' %}
+                    스마트보안솔루션과
+                {% elif first_major == '2' %}
+                    디바이스소프트웨어과
+                {% elif first_major == '3' %}
+                    인공지능소프트웨어과
+                {% elif first_major == '4' %}
+                    게임소프트웨어과
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputSecondMajor" class="col-sm-3 col-form-label">2지망</label>
+        <div class="col-sm-9">
+            <div type="text" class="form-control" id="inputSecondMajor">
+                {% if second_major == '0' %}
+                    2지망 학과를 입력하지 않았습니다.
+                {% elif second_major == '1' %}
+                    스마트보안솔루션과
+                {% elif second_major == '2' %}
+                    디바이스소프트웨어과
+                {% elif second_major == '3' %}
+                    인공지능소프트웨어과
+                {% elif second_major == '4' %}
+                    게임소프트웨어과
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputStCode" class="col-sm-3 col-form-label">2지망</label>
         <div class="col-sm-9">
             <div type="text" class="form-control" id="inputStCode">
-                {{ name }}
+                {{ neis_number }}
             </div>
         </div>
     </div>

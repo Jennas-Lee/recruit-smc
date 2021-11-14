@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'check',
     'index',
     'info',
+    'score',
     'recruit',
 ]
 

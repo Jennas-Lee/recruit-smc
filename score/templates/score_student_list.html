@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        <h1 class="text-center">원서접수 목록</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">이름</th>
+                <th scope="col">학교</th>
+                <th scope="col">수험번호</th>
+                <th scope="col">포트폴리오</th>
+                <th scope="col">자기소개서</th>
+                <th scope="col">학업계획서</th>
+                <th scope="col">기초소양능력</th>
+                <th scope="col">인성</th>
+                <th scope="col">전공적성</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            허가받은 교사만 사용가능한 기능입니다.
+        </div>
+    {% endif %}
+{% endblock %}
