@@ -1,0 +1,23 @@
+version: 0.0
+os: linux
+hooks:
+  BeforeInstall:
+    - location: scripts/BeforeInstall.sh
+      timeout: 180
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/AfterInstall.sh
+      timeout: 180
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/ApplicationStart.sh
+      timeout: 180
+      runas: ec2-user
+  ValidateService:
+    - location: scripts/ValidateService.sh
+      timeout: 300
+      runas: ec2-user
+  ApplicationStop:
+    - location: scripts/ApplicationStop.sh
+      timeout: 60
+      runas: ec2-user

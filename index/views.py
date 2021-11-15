@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.utils import timezone
 from datetime import date
 
@@ -23,3 +23,7 @@ def index(request):
 
     return render(request, 'index.html',
                   {'navbar': 'index', 'd_day_color': d_day_color, 'd_day': d_day, 'recruit_status': recruit_status})
+
+
+def healthcheck(request):
+    return HttpResponse(status=200)
