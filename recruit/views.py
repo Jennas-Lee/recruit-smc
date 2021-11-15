@@ -10,6 +10,7 @@ from django.utils import timezone
 from config.settings import AWS_S3_BUCKET, STATIC_CDN_LINK
 
 from recruit.models import Student, Document
+from score.models import Score
 
 start_timestamp = 1637625600
 end_timestamp = 1637740800
@@ -108,7 +109,7 @@ def form_receive(request):
         # Class_ Validation
         if school != "검정고시" and len(class_) <= 0:
             response_data['error_messages'].append('반을 입력하세요.')
-        elif school != "검정고시" and re.match('^\\d{1,2}$', class_) is None:
+        elif school != "검정고시" and re.match('^[0-9]{1,2}$', class_) is None:
             response_data['error_messages'].append('반을 올바르게 입력하세요.')
         else:
             pass
@@ -116,7 +117,7 @@ def form_receive(request):
         # Number Validation
         if school != "검정고시" and len(number) <= 0:
             response_data['error_messages'].append('번호를 입력하세요.')
-        elif school != "검정고시" and re.match('^\\d{1,2}$', number) is None:
+        elif school != "검정고시" and re.match('^[0-9]{1,2}$', number) is None:
             response_data['error_messages'].append('번호를 올바르게 입력하세요.')
         else:
             pass
@@ -166,7 +167,7 @@ def form_receive(request):
         else:
             try:
                 student = Student(name=name, first_major=first_major, second_major=second_major, school=school,
-                                  grade=grade, _class=class_, number=number, tel_st=tel_st, tel_pa=tel_pa,
+                                  grade=grade, Class=class_, number=number, tel_st=tel_st, tel_pa=tel_pa,
                                   password=password)
                 student.save()
 
@@ -265,6 +266,10 @@ def form_documents(request):
                                 document.cert_license = cdn_url
 
                 document.save()
+                student.document = document
+                student.score = Score()
+                student.save()
+
                 response_data['status_code'] = 200
 
             except NotFoundDocuIntegratedException:

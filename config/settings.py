@@ -1,21 +1,59 @@
-import os, os.path
+import os
+import os.path
 from pathlib import Path
+
+ENV = True if os.getenv('DJANGO_ENV') == 'production' else False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+if ENV:
+    READ_DATABASE = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DJANGO_READ_DATABASE_NAME'),
+        'USER': os.getenv('DJANGO_READ_DATABASE_USER'),
+        'PASSWORD': os.getenv('DJANGO_READ_DATABASE_PASSWORD'),
+        'HOST': os.getenv('DJANGO_READ_DATABASE_HOST'),
+        'PORT': os.getenv('DJANGO_READ_DATABASE_PORT'),
+    }
+
+    WRITE_DATABASE = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DJANGO_WRITE_DATABASE_NAME'),
+        'USER': os.getenv('DJANGO_WRITE_DATABASE_USER'),
+        'PASSWORD': os.getenv('DJANGO_WRITE_DATABASE_PASSWORD'),
+        'HOST': os.getenv('DJANGO_WRITE_DATABASE_HOST'),
+        'PORT': os.getenv('DJANGO_WRITE_DATABASE_PORT'),
+    }
+else:
+    READ_DATABASE = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+
+    WRITE_DATABASE = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = \
+#     os.getenv('DJANGO_SECRET_KEY') if ENV else 'django-insecure-2b7bv)@8r9ebu8^x*ud4#rfkq4jh!q67vx@#c@a1dg@m83#wu%'
 SECRET_KEY = 'django-insecure-2b7bv)@8r9ebu8^x*ud4#rfkq4jh!q67vx@#c@a1dg@m83#wu%'
 ALGORITHM = 'HS256'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ENV = os.getenv('DJANGO_ENV')
-DEBUG = False if ENV == 'production' else True
+DEBUG = False if ENV else True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    # 'localhost',
+    # '127.0.0.1',
+    # 'web' if ENV else ''
+    '*'
+]
 
 # Application definition
 
@@ -69,11 +107,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {  # TODO: Change to PostgreSQL
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+DATABASE_ROUTERS = ['config.router.DatabaseRouter']
+
+DATABASES = {
+    'default': READ_DATABASE,
+    'read': READ_DATABASE,
+    'write': WRITE_DATABASE,
 }
 
 # Password validation
@@ -110,7 +149,8 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+STATIC_URL = os.getenv('static_cdn_link') + 'static/'
 STATICFILES_DIRS = [
     os.path.join('static')
 ]
@@ -118,6 +158,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

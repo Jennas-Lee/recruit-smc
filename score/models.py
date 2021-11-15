@@ -1,6 +1,6 @@
 from django.db import models
 
-from recruit.models import Student
+# from recruit.models import Student
 
 
 class Score(models.Model):
@@ -18,4 +18,4 @@ class Score(models.Model):
     score_5_created_at = models.DateTimeField(null=True, blank=True)
     score_6_created_at = models.DateTimeField(null=True, blank=True)
 
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student')
+    # student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student')

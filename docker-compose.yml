@@ -1,0 +1,22 @@
+# docker-compose.yml
+
+version: "0.1"
+services:
+  django:
+    container_name: django
+    image: recruit-smc:latest 479083420128.dkr.ecr.ap-northeast-2.amazonaws.com/recruit-smc:latest
+    ports:
+        - "8000:8000"
+    build: ./django
+    volumes:
+        - /sock
+  nginx:
+    container_name: nginx
+    image: bi0416/nginx:latest
+    ports:
+        - "80:80"
+    build: ./nginx
+    volumes:
+        - /sock
+    depends_on :
+        - django

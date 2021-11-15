@@ -23,7 +23,7 @@ def check_status(request):
             'second_major': student.second_major,
             'school': student.school,
             'grade': student.grade,
-            'class_': student._class,
+            'class_': student.Class,
             'number': student.number,
             'tel_st': student.tel_st,
             'tel_pa': student.tel_pa,
