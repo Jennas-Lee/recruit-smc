@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run -itd -v /sock:/sock \
+docker run -itd --rm -v /sock:/sock \
   -e PYTHONUNBUFFERED=$PYTHONUNBUFFERED \
   -e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE \
   -e aws_s3_bucket=$aws_s3_bucket \
@@ -21,4 +21,4 @@ docker run -itd -v /sock:/sock \
   -e IMAGE_REPO_NAME=$IMAGE_REPO_NAME \
   --name django django:latest
 
-docker run -itd -v /sock:/sock -p 80:80 --name nginx nginx:latest
+docker run -itd --rm -v /sock:/sock -p 80:80 --name nginx nginx:latest
