@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo Skip BeforeInstall hook
+bash /etc/profild.d/codedeploy.sh

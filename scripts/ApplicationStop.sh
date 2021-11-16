@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker stop nginx
-docker stop django
+echo Skip ApplicationStop hook
