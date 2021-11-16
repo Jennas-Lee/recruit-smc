@@ -1,5 +1,7 @@
 #!/bin/bash
 
+bash /etc/profile.d/codedeploy.sh
+
 docker run -itd --rm -v /sock:/sock \
   -e PYTHONUNBUFFERED=$PYTHONUNBUFFERED \
   -e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE \
