@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash /etc/profild.d/codedeploy.sh
+bash /etc/profile.d/codedeploy.sh
