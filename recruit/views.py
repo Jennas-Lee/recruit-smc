@@ -267,7 +267,9 @@ def form_documents(request):
 
                 document.save()
                 student.document = document
-                student.score = Score()
+                score = Score()
+                score.save()
+                student.score = score
                 student.save()
 
                 response_data['status_code'] = 200
