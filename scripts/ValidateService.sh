@@ -2,7 +2,7 @@
 
 for i in $(seq 1 6)
 do
-    HTTP_CODE=$(curl --write-out '%{http_code}' -o /dev/null -m 10 -q -s http://localhost/healthcheck)
+    HTTP_CODE=$(curl --write-out '%{http_code}' -o /dev/null -m 10 -q -s http://localhost/healthcheck/)
     if [ "${HTTP_CODE}" == "200" ]; then
         echo "Succeeded pull healthcheck page."
         exit 0
