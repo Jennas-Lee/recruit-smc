@@ -12,8 +12,17 @@
                     <div class="col-sm-10">
                         <input type="file" class="form-control" id="inputDocuIntegrated" name="docu_integrated"
                                required>
-                        <div id="passwordHelpBlock" class="form-text">
+                        <div class="form-text">
                             자기소개서 및 학업계획서는 반드시 한글 파일(.hwp)로 제출해야 합니다.
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputInterview" class="col-sm-2 col-form-label">심층면접 영상</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputInterview" name="interview" multiple required>
+                        <div class="form-text">
+                            인터뷰 영상을 반드시 제출해야 합니다. 파일 여러개 업로드가 가능합니다.
                         </div>
                     </div>
                 </div>
@@ -21,25 +30,25 @@
                     <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">온라인 SW 아카데미 수료증</label>
                     <div class="col-sm-10">
                         <input type="file" class="form-control" id="inputCertOnline" name="cert_online">
-                        <div id="passwordHelpBlock" class="form-text">
-                            2020년 이후 온라인으로 진행된 SW 아카데미만 해당됩니다.
-                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">SW 아카데미 수료증</label>
+                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">수요진로체험 수료증</label>
                     <div class="col-sm-10">
                         <input type="file" class="form-control" id="inputCertOffline" name="cert_offline">
-                        <div id="passwordHelpBlock" class="form-text">
-                            2019년 이전에 진행된 오프라인 SW 아카데미만 해당됩니다.
-                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">중학생 SW경진대회 확인서</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" id="inputCertContest" name="cert_contest">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputDocuIntegrated" class="col-sm-2 col-form-label">자격증</label>
                     <div class="col-sm-10">
                         <input type="file" class="form-control" id="inputCertLicense" name="cert_license">
-                        <div id="passwordHelpBlock" class="form-text">
+                        <div class="form-text">
                             파일이 여러개일 경우 압축해서 업로드하시기 바랍니다.
                         </div>
                     </div>
@@ -50,9 +59,29 @@
                             data-bs-target="#staticBackdrop">
                         접수 취소
                     </button>
-                    <button type="submit" class="btn btn-primary">접수하기</button>
+                    <button type="submit" class="btn btn-primary" id="document-submit">접수하기</button>
                 </div>
             </form>
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">원서접수를 취소하시겠습니까?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            원서접수를 취소하면 입력했던 정보를 잃어버리게 됩니다.
+                            <br>
+                            정말로 취소하시겠습니까?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            <a href="{% url 'recruit-index' %}" class="btn btn-danger">접수 취소하기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <script>let url = "{% url 'recruit-form-documents' %}"</script>
             <script src="{% static 'js/recruitDocument.js' %}"></script>
         {% else %}

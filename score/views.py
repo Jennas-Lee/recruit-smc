@@ -1,11 +1,14 @@
 from django.shortcuts import render, HttpResponse
 from django.core.paginator import Paginator
 
+from authentication.models import User
 from recruit.models import Student
 
 
 def score_index(request):
-    return render(request, 'score_index.html')
+    apply_user_count = User.objects.filter(permission=0).count()
+
+    return render(request, 'score_index.html', {'apply_user_count': apply_user_count})
 
 
 def score_student_list(request):

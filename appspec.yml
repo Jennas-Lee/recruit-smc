@@ -1,10 +1,6 @@
 version: 0.0
 os: linux
 hooks:
-  BeforeInstall:
-    - location: scripts/BeforeInstall.sh
-      timeout: 180
-      runas: ec2-user
   AfterInstall:
     - location: scripts/AfterInstall.sh
       timeout: 180

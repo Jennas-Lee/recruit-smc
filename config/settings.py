@@ -150,7 +150,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 # STATIC_URL = '/static/'
-STATIC_URL = os.getenv('static_cdn_link') + 'static/'
+STATIC_URL = os.getenv('static_cdn_link') + 'static/' if ENV else '/static/'
 STATICFILES_DIRS = [
     os.path.join('static')
 ]

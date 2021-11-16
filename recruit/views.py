@@ -87,6 +87,8 @@ def form_receive(request):
         # Second Major Validation
         if -1 > int(second_major) or int(second_major) > 5:
             response_data['error_messages'].append('2지망 학과를 올바르게 선택하세요.')
+        elif first_major == second_major:
+            response_data['error_messages'].append('1지망과 2지망은 같은 학과를 선택할 수 없습니다.')
         else:
             pass
 
@@ -210,7 +212,7 @@ def form_documents(request):
         }
 
         if request.session.get('tel_st') and Student.objects.filter(tel_st=request.session.get('tel_st')).count():
-            student = Student.objects.filter(tel_st=request.session.get('tel_st')).first()
+            student = Student.objects.filter(tel_st=request.session.get('tel_st')).last()
             files_data = {
                 'docu_integrated': {
                     'file': request.FILES.get('docu_integrated', None),
@@ -222,19 +224,46 @@ def form_documents(request):
                 },
                 'cert_offline': {
                     'file': request.FILES.get('cert_offline', None),
-                    'name': "[SW 아카데미] " + student.school + " " + student.name
+                    'name': "[수요진로체험] " + student.school + " " + student.name
+                },
+                'cert_contest': {
+                    'file': request.FILES.get('cert_contest', None),
+                    'name': "[SW경진대회] " + student.school + " " + student.name
                 },
                 'cert_license': {
                     'file': request.FILES.get('cert_license', None),
                     'name': "[자격증] " + student.school + " " + student.name
                 },
             }
+            interview_files = request.FILES.getlist('interview', None)
             url = 'student/' + str(int(now_timestamp)) + '/' + str(student.pk) + '/'
 
             try:
-                client = boto3.client('s3')
                 document = Document()
-                document.student_id = student
+                client = boto3.client('s3')
+
+                if len(interview_files) == 0:
+                    raise NotFoundDocuIntegratedException
+                else:
+                    interview_data = {'files': []}
+                    for file in interview_files:
+                        root, extension = os.path.splitext(file.name)
+                        filename = "[심층면접 영상] " + student.school + " " + student.name + "(" + file.name + ")" + extension
+                        full_url = url + filename
+                        cdn_url = STATIC_CDN_LINK + full_url
+
+                        client.upload_fileobj(
+                            file,
+                            AWS_S3_BUCKET,
+                            full_url,
+                            ExtraArgs={
+                                "ContentType": file.content_type
+                            }
+                        )
+
+                        interview_data['files'].append(cdn_url)
+
+                document.interview = interview_data
 
                 for key, values in files_data.items():
                     if key == 'docu_integrated' and values['file'] is None:
@@ -262,6 +291,8 @@ def form_documents(request):
                                 document.cert_online = cdn_url
                             elif key == 'cert_offline':
                                 document.cert_offline = cdn_url
+                            elif key == 'cert_contest':
+                                document.cert_contest = cdn_url
                             elif key == 'cert_license':
                                 document.cert_license = cdn_url
 
@@ -275,7 +306,7 @@ def form_documents(request):
                 response_data['status_code'] = 200
 
             except NotFoundDocuIntegratedException:
-                response_data['error_messages'] = "자기소개서 및 학업계획서를 선택해주세요."
+                response_data['error_messages'] = "자기소개서 및 학업계획서, 심층면접 영상을 입력해주세요."
                 response_data['status_code'] = 400
 
             except Exception:

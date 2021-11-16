@@ -5,12 +5,12 @@ from score.models import Score
 
 class Document(models.Model):
     docu_integrated = models.CharField(null=False, max_length=100)
-    cert_web = models.CharField(null=True, blank=True, max_length=100)
+    interview = models.JSONField(null=False)
+    # cert_web = models.CharField(null=True, blank=True, max_length=100)
     cert_online = models.CharField(null=True, blank=True, max_length=100)
     cert_offline = models.CharField(null=True, blank=True, max_length=100)
     cert_license = models.CharField(null=True, blank=True, max_length=100)
     cert_contest = models.CharField(null=True, blank=True, max_length=100)
-    # student_id = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_id')
 
     created_at = models.DateTimeField(null=False, auto_now_add=True)
 

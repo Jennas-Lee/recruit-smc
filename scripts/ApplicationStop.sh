@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo Skip ApplicationStop hook
+docker stop django || true
+docker stop nginx || true

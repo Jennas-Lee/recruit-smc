@@ -5,18 +5,23 @@
         {% csrf_token %}
         <div class="col-md-2">
             <label for="inputName" class="form-label">이름</label>
-            <input type="text" class="form-control" id="inputName" name="name">
+            <input type="text" class="form-control" id="inputName" name="name" value="{{ name }}">
         </div>
         <div class="col-md-5">
             <label for="inputTel_st" class="form-label">학생 전화번호</label>
             <input type="text" class="form-control" id="inputTel_st" name="tel_st" placeholder="-를 제외한 숫자만 입력하세요."
-                   maxlength="11">
+                   maxlength="11" value="{{ tel_st }}">
         </div>
         <div class="col-md-5">
             <label for="inputPassword" class="form-label">비밀번호</label>
             <input type="password" class="form-control" id="inputPassword" name="password"
-                   placeholder="원서접수때 입력했던 비밀번호 4자리를 입력하세요." maxlength="4">
+                   placeholder="원서접수때 입력했던 비밀번호 4자리를 입력하세요." maxlength="4" value="{{ password }}">
         </div>
+        {% if error_messages %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                접수상태를 찾을 수 없습니다. 이름과 전화번호, 비밀번호를 확인하십시오.
+            </div>
+        {% endif %}
         <div class="col-12 text-center">
             <button type="submit" class="btn btn-primary">확인하기</button>
         </div>

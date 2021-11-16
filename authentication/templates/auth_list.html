@@ -1,51 +1,21 @@
 {% extends 'base.html' %}
 {% block contents %}
-    {% if request.user.is_authenticated %}
-        <h1 class="text-center">원서접수 목록</h1>
+    {% if request.user.is_authenticated and request.user.permission == 8 %}
+        <h1 class="text-center">교사 목록 관리</h1>
         <table class="table table-striped text-center">
             <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">이름</th>
-                <th scope="col">학교</th>
-                <th scope="col">자기소개서</th>
-                <th scope="col">학업계획서</th>
-                <th scope="col">면접</th>
+                <th scope="col">이메일</th>
             </tr>
             </thead>
             <tbody>
             {% for row in page_obj %}
                 <tr>
                     <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
-                    <td>{{ row.name }}</td>
-                    <td>{{ row.school }}</td>
-                    <td>
-                        {% if row.score.score_1 %}
-                            {{ row.score.score_1 }}
-                        {% elif request.user.permission == 2 or request.user.permission == 8 %}
-                            <a href="" class="btn btn-sm btn-danger">채점</a>
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if row.score.score_2 %}
-                            {{ row.score.score_2 }}
-                        {% elif request.user.permission == 3 or request.user.permission == 8 %}
-                            <a href="" class="btn btn-sm btn-danger">채점</a>
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if row.score.score_3 %}
-                            {{ row.score.score_3 }}
-                        {% elif request.user.permission == 4 or request.user.permission == 8 %}
-                            <a href="" class="btn btn-sm btn-danger">채점</a>
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
+                    <td><a href="{% url 'teacher-info' id=row.pk %}?from=list" class="text-decoration-none">{{ row.name }}</a></td>
+                    <td>{{ row.email }}</td>
                 </tr>
             {% endfor %}
             </tbody>

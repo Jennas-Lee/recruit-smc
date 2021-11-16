@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.core.paginator import Paginator
 
 from authentication.models import User
 
@@ -93,3 +94,76 @@ def signout(request):
     logout(request)
 
     return redirect('/')
+
+
+def teacher_list(request):
+    page = request.GET.get('page', 1)
+
+    user = User.objects.filter(permission__gt=0).order_by('pk')
+    paginator = Paginator(user, 15)
+    page_obj = paginator.get_page(page)
+    previous = page_obj.previous_page_number if page_obj.has_previous() else 1
+    next = page_obj.next_page_number if page_obj.has_next() else page_obj.paginator.num_pages
+
+    return render(request, 'auth_list.html', {'page_obj': page_obj, 'previous': previous, 'next': next})
+
+
+def teacher_info(request, id):
+    user = User.objects.filter(pk=id).last()
+
+    if request.method == 'GET':
+        return render(request, 'auth_info.html', {'user': user})
+
+    elif request.method == 'POST':
+        try:
+            email = request.POST.get('email')
+            name = request.POST.get('name')
+            permission = int(request.POST.get('permission'))
+
+            if user.email != email:
+                user.email = email
+            if user.name != name:
+                user.name = name
+            if user.permission != permission:
+                user.permission = permission
+
+            user.save()
+
+            if request.GET.get('from', 'list') == 'apply':
+                return redirect('/auth/list/apply/')
+            elif request.GET.get('from', 'list') == 'deny':
+                return redirect('/auth/list/apply/')
+            else:
+                return redirect('/auth/list/')
+
+        except:
+            return HttpResponse("""
+                                    <script>
+                                        alert('오류가 발생했습니다. 다시 시도해주세요. 이 알림이 계속되면 개발자에게 연락주세요.');
+                                        location.href = document.referrer;
+                                    </script>
+                                """)
+
+
+def teacher_apply_list(request):
+    page = request.GET.get('page', 1)
+
+    user = User.objects.filter(permission=0).order_by('pk')
+    paginator = Paginator(user, 15)
+    page_obj = paginator.get_page(page)
+    previous = page_obj.previous_page_number if page_obj.has_previous() else 1
+    next = page_obj.next_page_number if page_obj.has_next() else page_obj.paginator.num_pages
+
+    return render(request, 'auth_apply_list.html', {'page_obj': page_obj, 'previous': previous, 'next': next})
+
+
+def teacher_deny_list(request):
+    page = request.GET.get('page', 1)
+
+    user = User.objects.filter(permission=-1).order_by('pk')
+    paginator = Paginator(user, 15)
+    page_obj = paginator.get_page(page)
+    previous = page_obj.previous_page_number if page_obj.has_previous() else 1
+    next = page_obj.next_page_number if page_obj.has_next() else page_obj.paginator.num_pages
+
+    return render(request, 'auth_deny_list.html', {'page_obj': page_obj, 'previous': previous, 'next': next})
