@@ -23,7 +23,7 @@
                         {% if row.score.score_1 %}
                             {{ row.score.score_1 }}
                         {% elif request.user.permission == 2 or request.user.permission == 8 %}
-                            <a href="" class="btn btn-sm btn-danger">채점</a>
+                            <a href="{% url 'score-set-docu-integrated' id=row.pk %}" class="btn btn-sm btn-danger">채점</a>
                         {% else %}
                             -
                         {% endif %}
@@ -32,7 +32,7 @@
                         {% if row.score.score_2 %}
                             {{ row.score.score_2 }}
                         {% elif request.user.permission == 3 or request.user.permission == 8 %}
-                            <a href="" class="btn btn-sm btn-danger">채점</a>
+                            <a href="{% url 'score-set-docu-plan' id=row.pk %}" class="btn btn-sm btn-danger">채점</a>
                         {% else %}
                             -
                         {% endif %}
@@ -41,7 +41,7 @@
                         {% if row.score.score_3 %}
                             {{ row.score.score_3 }}
                         {% elif request.user.permission == 4 or request.user.permission == 8 %}
-                            <a href="" class="btn btn-sm btn-danger">채점</a>
+                            <a href="{% url 'score-set-interview' id=row.pk %} class="btn btn-sm btn-danger">채점</a>
                         {% else %}
                             -
                         {% endif %}
@@ -102,6 +102,7 @@
                 </li>
             </ul>
         </nav>
+        <a href="#" class="btn btn-primary float-end">엑셀 파일 다운로드</a>
     {% else %}
         <div class="alert alert-danger" role="alert">
             허가받은 교사만 사용가능한 기능입니다.

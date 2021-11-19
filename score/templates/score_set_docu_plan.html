@@ -93,12 +93,32 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <hr>
             {% if student.neis_number %}
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label-lg">학업계획서 점수</label>
                     <div class="col-sm-9 form-control form-control-lg">
                         {{ student.neis_number }}
+=======
+            <div class="row mb-3">
+                <label for="inputDocu_integrated" class="col-sm-3 col-form-label">자기소개서 및 학업계획서</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputDocu_plan">
+                        <a href="{{ student.document.docu_integrated }}" class="btn btn-primary" download>다운로드</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% if student.score.score_2 %}
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label-lg">학업계획서 점수 점수</label>
+                    <div class="col-sm-9 form-control form-control-lg">
+                        {{ student.score.score_2 }}
+                    </div>
+                    <div class="form-text">
+                        {{ student.score.score_2_created_at }}
+>>>>>>> origin/develop
                     </div>
                 </div>
                 <button class="btn btn-secondary float-end disabled">학업계획서 채점이 완료되었습니다.</button>
