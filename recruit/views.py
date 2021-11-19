@@ -87,7 +87,7 @@ def form_receive(request):
         # Second Major Validation
         if -1 > int(second_major) or int(second_major) > 5:
             response_data['error_messages'].append('2지망 학과를 올바르게 선택하세요.')
-        elif first_major == second_major:
+        elif int(first_major) != 0 and first_major == second_major:
             response_data['error_messages'].append('1지망과 2지망은 같은 학과를 선택할 수 없습니다.')
         else:
             pass
@@ -230,10 +230,6 @@ def form_documents(request):
                     'file': request.FILES.get('cert_contest', None),
                     'name': "[SW경진대회] " + student.school + " " + student.name
                 },
-                'cert_license': {
-                    'file': request.FILES.get('cert_license', None),
-                    'name': "[자격증] " + student.school + " " + student.name
-                },
             }
             interview_files = request.FILES.getlist('interview', None)
             url = 'student/' + str(int(now_timestamp)) + '/' + str(student.pk) + '/'
@@ -293,8 +289,6 @@ def form_documents(request):
                                 document.cert_offline = cdn_url
                             elif key == 'cert_contest':
                                 document.cert_contest = cdn_url
-                            elif key == 'cert_license':
-                                document.cert_license = cdn_url
 
                 document.save()
                 student.document = document
@@ -304,6 +298,9 @@ def form_documents(request):
                 student.save()
 
                 response_data['status_code'] = 200
+
+                del request.session['tel_st']
+                request.session.modified = True
 
             except NotFoundDocuIntegratedException:
                 response_data['error_messages'] = "자기소개서 및 학업계획서, 심층면접 영상을 입력해주세요."

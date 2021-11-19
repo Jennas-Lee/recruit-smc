@@ -9,7 +9,6 @@ class Document(models.Model):
     # cert_web = models.CharField(null=True, blank=True, max_length=100)
     cert_online = models.CharField(null=True, blank=True, max_length=100)
     cert_offline = models.CharField(null=True, blank=True, max_length=100)
-    cert_license = models.CharField(null=True, blank=True, max_length=100)
     cert_contest = models.CharField(null=True, blank=True, max_length=100)
 
     created_at = models.DateTimeField(null=False, auto_now_add=True)

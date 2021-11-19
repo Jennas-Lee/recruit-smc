@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block contents %}
+    {% if request.user.is_authenticated %}
+        {% if student %}
+            <h1 class="text-center">자기소개서 채점</h1>
+            <div class="row mb-3">
+                <label for="inputName" class="col-sm-3 col-form-label">이름</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputName">
+                        {{ student.name }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputFirstMajor" class="col-sm-3 col-form-label">1지망</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputFirstMajor">
+                        {% if student.first_major == '1' %}
+                            스마트보안솔루션과
+                        {% elif student.first_major == '2' %}
+                            디바이스소프트웨어과
+                        {% elif student.first_major == '3' %}
+                            인공지능소프트웨어과
+                        {% elif student.first_major == '4' %}
+                            게임소프트웨어과
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputSecondMajor" class="col-sm-3 col-form-label">2지망</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputSecondMajor">
+                        {% if student.second_major == '0' %}
+                            2지망 학과를 입력하지 않았습니다.
+                        {% elif student.second_major == '1' %}
+                            스마트보안솔루션과
+                        {% elif student.second_major == '2' %}
+                            디바이스소프트웨어과
+                        {% elif student.second_major == '3' %}
+                            인공지능소프트웨어과
+                        {% elif student.second_major == '4' %}
+                            게임소프트웨어과
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputSchool" class="col-sm-3 col-form-label">학교</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputSchool">
+                        {{ student.school }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputGrade" class="col-sm-3 col-form-label">학년</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputGrade">
+                        {{ student.grade }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="input_Class" class="col-sm-3 col-form-label">반</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="input_Class">
+                        {{ student.Class }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputNumber" class="col-sm-3 col-form-label">번호</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputNumber">
+                        {{ student.number }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputTel_st" class="col-sm-3 col-form-label">학생 전화번호</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputTel_st">
+                        {{ student.tel_st }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputTel_pa" class="col-sm-3 col-form-label">학부모 전화번호</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputTel_pa">
+                        {{ student.tel_pa }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputDocu_Integrated" class="col-sm-3 col-form-label">자기소개서 다운로드</label>
+                <div class="col-sm-9">
+                    <div class="form-control" id="inputDocu_Integrated">
+                        <a href="{{ student.document.docu_integrated }}" class="btn btn-primary" target="_blank"
+                           download>
+                            다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% if student.neis_number %}
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label-lg">자기소개서 점수</label>
+                    <div class="col-sm-9 form-control form-control-lg">
+                        {{ student.neis_number }}
+                    </div>
+                </div>
+                <button class="btn btn-secondary float-end disabled">자기소개서 채점이 완료되었습니다.</button>
+            {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label-lg">자기소개서 채점</label>
+                        <div class="col-sm-9">
+                            <input class="form-control form-control-lg" type="text" name="docu_integrated">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary float-end" type="submit">입력하기</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                찾을 수 없는 학생입니다.
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            허가받은 교사만 사용가능한 기능입니다.
+        </div>
+    {% endif %}
+{% endblock %}

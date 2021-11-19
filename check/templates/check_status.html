@@ -159,14 +159,4 @@
             {% endif %}
         </div>
     </div>
-    <div class="row mb-3">
-        <label for="inputTel_pa" class="col-sm-3 col-form-label">자격증</label>
-        <div class="col-sm-9">
-            {% if cert_license %}
-                <a href="{{ cert_license }}" class="btn btn-primary" target="_blank" download>다운로드</a>
-            {% else %}
-                <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
-            {% endif %}
-        </div>
-    </div>
 {% endblock %}

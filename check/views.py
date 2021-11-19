@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
 
-from recruit.models import Student, Document
+from recruit.models import Student
 
 
 def check_index(request):
     if request.method == 'GET':
-        if request.session.get('tel_st') and Student.objects.filter(tel_st=request.session.get('tel_st')).count():
-            return redirect('/check/status/')
-        else:
-            return render(request, 'check_index.html')
+        return render(request, 'check_index.html')
+
     elif request.method == 'POST':
         name = request.POST.get('name')
         tel_st = request.POST.get('tel_st')
@@ -27,6 +25,7 @@ def check_index(request):
             response_data['error_messages'] = True
 
             return render(request, 'check_index.html', response_data)
+
         else:
             request.session['tel_st'] = tel_st
 
@@ -39,6 +38,7 @@ def check_status(request):
 
         if student.document is None:
             return redirect('/recruit/documents/')
+
         else:
             response_data = {
                 'name': student.name,
@@ -56,8 +56,10 @@ def check_status(request):
                 'cert_online': student.document.cert_online,
                 'cert_offline': student.document.cert_offline,
                 'cert_contest': student.document.cert_contest,
-                'cert_license': student.document.cert_license,
             }
+
+            del request.session['tel_st']
+            request.session.modified = True
 
             return render(request, 'check_status.html', response_data)
     else:

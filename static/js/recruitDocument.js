@@ -56,7 +56,6 @@ document.getElementById('recruit-documents-form').addEventListener('submit', (ev
     form_data.append('cert_online', document.getElementById('inputCertOnline').files[0]);
     form_data.append('cert_offline', document.getElementById('inputCertOffline').files[0]);
     form_data.append('cert_contest', document.getElementById('inputCertContest').files[0]);
-    form_data.append('cert_license', document.getElementById('inputCertLicense').files[0]);
 
     for (let i = 0; i < interview_files.length; i++) {
         form_data.append('interview', interview_files[i]);
