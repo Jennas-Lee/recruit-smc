@@ -21,21 +21,20 @@ if start_timestamp < now_timestamp < end_timestamp:
 else:
     recruit_available = False
 
-# TODO: Update recruit_available
-recruit_available = True
-
 
 class NotFoundDocuIntegratedException(Exception):
     pass
 
 
 def index(request):
-    return render(request, 'recruit_index.html', {'recruit_available': recruit_available})
+    return render(request, 'recruit_index.html',
+                  {'recruit_available': recruit_available or request.GET.get('test', None) == 'true'})
 
 
 def form_receive(request):
     if request.method == 'GET':
-        return render(request, 'recruit_form_receive.html', {'recruit_available': recruit_available})
+        return render(request, 'recruit_form_receive.html',
+                      {'recruit_available': recruit_available or request.GET.get('test', None) == 'true'})
 
     elif request.method == 'POST':
         name = request.POST.get('name')
@@ -190,7 +189,7 @@ def form_receive(request):
 def form_documents(request):
     if request.method == 'GET':
         response_data = {
-            'recruit_available': recruit_available,
+            'recruit_available': recruit_available or request.GET.get('test', None) == 'true',
             'name': None,
             'school': None
         }

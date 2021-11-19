@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'check',
+    'docs',
     'index',
     'info',
     'score',
