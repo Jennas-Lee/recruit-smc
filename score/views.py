@@ -208,7 +208,7 @@ def score_set_interview(request, id):
                     else:
                         student.score.score_3 = int(interview)
                         student.score.score_3_created_at = now()
-                        student.save()
+                        student.score.save()
 
                         return HttpResponse("""
                                 <script>
@@ -255,7 +255,7 @@ def score_set_addition(request, id):
                     else:
                         student.score.score_4 = int(interview)
                         student.score.score_4_created_at = now()
-                        student.save()
+                        student.score.save()
 
                         return HttpResponse("""
                                 <script>
