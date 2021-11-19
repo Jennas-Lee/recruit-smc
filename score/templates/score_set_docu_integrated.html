@@ -57,7 +57,11 @@
                 <label for="inputGrade" class="col-sm-3 col-form-label">학년</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputGrade">
-                        {{ student.grade }}
+                        {% if student.grade %}
+                            {{ student.grade }}
+                        {% else %}
+                            <span class="text-secondary">{{ student.school }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -65,7 +69,11 @@
                 <label for="input_Class" class="col-sm-3 col-form-label">반</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="input_Class">
-                        {{ student.Class }}
+                        {% if student.Class %}
+                            {{ student.Class }}
+                        {% else %}
+                            <span class="text-secondary">{{ student.school }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -73,7 +81,11 @@
                 <label for="inputNumber" class="col-sm-3 col-form-label">번호</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputNumber">
-                        {{ student.number }}
+                        {% if student.number %}
+                            {{ student.number }}
+                        {% else %}
+                            <span class="text-secondary">{{ student.school }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -94,40 +106,24 @@
                 </div>
             </div>
             <div class="row mb-3">
-<<<<<<< HEAD
-                <label for="inputDocu_Integrated" class="col-sm-3 col-form-label">자기소개서 다운로드</label>
-                <div class="col-sm-9">
-                    <div class="form-control" id="inputDocu_Integrated">
-                        <a href="{{ student.document.docu_integrated }}" class="btn btn-primary" target="_blank"
-                           download>
-                            다운로드
-                        </a>
-=======
                 <label for="inputDocu_integrated" class="col-sm-3 col-form-label">자기소개서 및 학업계획서</label>
                 <div class="col-sm-9">
-                    <div class="form-control" id="inputDocu_integrated">
-                        <a href="{{ student.document.docu_integrated }}" class="btn btn-primary" download>다운로드</a>
->>>>>>> origin/develop
+                    <div id="inputDocu_integrated">
+                        <a href="{{ student.document.docu_integrated }}" class="btn btn-primary" target="_blank" download>다운로드</a>
                     </div>
                 </div>
             </div>
             <hr>
-<<<<<<< HEAD
-            {% if student.neis_number %}
+            {% if student.score.score_1 is not None %}
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label-lg">자기소개서 점수</label>
-                    <div class="col-sm-9 form-control form-control-lg">
-                        {{ student.neis_number }}
-=======
-            {% if student.score.score_1 %}
-                <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label-lg">자기소개서 점수</label>
-                    <div class="col-sm-9 form-control form-control-lg">
-                        {{ student.score.score_1 }}
-                    </div>
-                    <div class="form-text">
-                        {{ student.score.score_1_created_at }}
->>>>>>> origin/develop
+                    <div class="col-sm-9">
+                        <div class="form-control form-control-lg">
+                            {{ student.score.score_1 }}
+                        </div>
+                        <div class="form-text">
+                            {{ student.score.score_1_created_at }}
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-secondary float-end disabled">자기소개서 채점이 완료되었습니다.</button>
@@ -135,11 +131,7 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row mb-3">
-<<<<<<< HEAD
-                        <label class="col-sm-3 col-form-label-lg">자기소개서 채점</label>
-=======
                         <label class="col-sm-3 col-form-label-lg">자기소개서 점수</label>
->>>>>>> origin/develop
                         <div class="col-sm-9">
                             <input class="form-control form-control-lg" type="text" name="docu_integrated">
                         </div>
@@ -147,6 +139,7 @@
                     <button class="btn btn-primary float-end" type="submit">입력하기</button>
                 </form>
             {% endif %}
+            <a href="{% url 'score-student-list' %}" class="btn btn-success float-end me-2" type="submit">목록으로</a>
         {% else %}
             <div class="alert alert-danger" role="alert">
                 찾을 수 없는 학생입니다.

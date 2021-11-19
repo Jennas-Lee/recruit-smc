@@ -166,6 +166,7 @@ def form_receive(request):
 
         if response_data['error_messages']:
             return render(request, 'recruit_form_receive.html', response_data)
+
         else:
             try:
                 student = Student(name=name, first_major=first_major, second_major=second_major, school=school,
@@ -176,6 +177,7 @@ def form_receive(request):
                 request.session['tel_st'] = tel_st
 
                 return redirect('/recruit/documents/')
+
             except:
                 return HttpResponse("""
                     <script>
@@ -200,6 +202,7 @@ def form_documents(request):
                 response_data['school'] = student.get().school
             else:
                 pass
+
         else:
             pass
 
@@ -240,6 +243,7 @@ def form_documents(request):
 
                 if len(interview_files) == 0:
                     raise NotFoundDocuIntegratedException
+
                 else:
                     interview_data = {'files': []}
                     for file in interview_files:

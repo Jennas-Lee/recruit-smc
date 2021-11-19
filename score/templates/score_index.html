@@ -16,18 +16,23 @@
         </h2>
         <div class="text-center">
             <a href="{% url 'score-student-list' %}" class="btn btn-primary">
-            {% if request.user.permission == 1 %}
-                자기소개서 채점
-            {% elif request.user.permission == 2 %}
-                학업계획서 채점
-            {% elif request.user.permission == 3 %}
-                심층면접 채점
-            {% elif request.user.permission == 8 %}
-                학생 목록 관리</a>
+                {% if request.user.permission == 1 %}
+                    자기소개서 채점
+                {% elif request.user.permission == 2 %}
+                    학업계획서 채점
+                {% elif request.user.permission == 3 %}
+                    심층면접 채점
+                {% elif request.user.permission == 8 %}
+                    학생 목록 관리
+                {% endif %}
+            </a>
+            {% if request.user.permission == 8 %}
                 <a href="{% url 'teacher-list' %}" class="btn btn-success">교사 목록 관리</a>
                 <a href="{% url 'teacher-apply-list' %}" class="btn btn-info">
                     교사 승인 요청
-                    {% if apply_user_count %}<span class="badge bg-secondary">{{ apply_user_count }}</span>{% endif %}
+                    {% if apply_user_count %}
+                        <span class="badge bg-secondary">{{ apply_user_count }}</span>
+                    {% endif %}
                 </a>
                 <a href="{% url 'teacher-deny-list' %}" class="btn btn-danger">교사 승인 거부</a>
             {% endif %}

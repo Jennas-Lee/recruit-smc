@@ -2,11 +2,7 @@
 {% block contents %}
     {% if request.user.is_authenticated %}
         {% if student %}
-<<<<<<< HEAD
-            <h1 class="text-center">수험번호 입력</h1>
-=======
             <h1 class="text-center">심층면접 채점</h1>
->>>>>>> origin/develop
             <div class="row mb-3">
                 <label for="inputName" class="col-sm-3 col-form-label">이름</label>
                 <div class="col-sm-9">
@@ -97,23 +93,12 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <hr>
-            {% if student.neis_number %}
-                <div class="row mb-3">
-                    <label for="inputTel_pa" class="col-sm-3 col-form-label-lg">수험번호 입력</label>
-                    <div class="col-sm-9 form-control form-control-lg">
-                        {{ student.neis_number }}
-                    </div>
-                </div>
-                <button class="btn btn-secondary float-end disabled">수험번호가 할당되었습니다.</button>
-=======
             <div class="row mb-3">
-                <label for="inputDocu_integrated" class="col-sm-3 col-form-label">심층면접 다운로드 </label>
+                <label for="inputDocu_integrated" class="col-sm-3 col-form-label">심층면접 다운로드</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputDocu_integrated">
                         {% for file in student.document.interview.files %}
-                            <a href="{{ file }}" class="btn btn-primary" targ et="_blank" download>
+                            <a href="{{ file }}" class="btn btn-primary" target="_blank" download>
                                 {{ forloop.counter }}번 다운로드
                             </a>
                         {% endfor %}
@@ -121,36 +106,32 @@
                 </div>
             </div>
             <hr>
-            {% if student.score.score_3 %}
+            {% if student.score.score_3 is not None %}
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label-lg">심층면접 점수</label>
-                    <div class="col-sm-9 form-control form-control-lg">
-                        {{ student.score.score_3 }}
-                    </div>
-                    <div class="form-text">
-                        {{ student.score.score_3_created_at }}
+                    <div class="col-sm-9">
+                        <div class="form-control form-control-lg">
+                            {{ student.score.score_3 }}
+                        </div>
+                        <div class="form-text">
+                            {{ student.score.score_3_created_at }}
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-secondary float-end disabled">심층면접 채점이 완료되었습니다.</button>
->>>>>>> origin/develop
             {% else %}
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row mb-3">
-<<<<<<< HEAD
-                        <label for="inputTel_pa" class="col-sm-3 col-form-label-lg">수험번호 입력</label>
-                        <div class="col-sm-9">
-                            <input class="form-control form-control-lg" type="text" name="neis_number">
-=======
                         <label class="col-sm-3 col-form-label-lg">심층면접 점수</label>
                         <div class="col-sm-9">
                             <input class="form-control form-control-lg" type="text" name="interview">
->>>>>>> origin/develop
                         </div>
                     </div>
                     <button class="btn btn-primary float-end" type="submit">입력하기</button>
                 </form>
             {% endif %}
+            <a href="{% url 'score-student-list' %}" class="btn btn-success float-end me-2" target="_blank" type="submit">목록으로</a>
         {% else %}
             <div class="alert alert-danger" role="alert">
                 찾을 수 없는 학생입니다.

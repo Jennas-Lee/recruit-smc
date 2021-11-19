@@ -2,7 +2,7 @@
 {% block contents %}
     {% if request.user.is_authenticated %}
         {% if student %}
-            <h1 class="text-center">학업계획서 채점</h1>
+            <h1 class="text-center">가산점 채점</h1>
             <div class="row mb-3">
                 <label for="inputName" class="col-sm-3 col-form-label">이름</label>
                 <div class="col-sm-9">
@@ -57,11 +57,7 @@
                 <label for="inputGrade" class="col-sm-3 col-form-label">학년</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputGrade">
-                        {% if student.grade %}
-                            {{ student.grade }}
-                        {% else %}
-                            <span class="text-secondary">{{ student.school }}</span>
-                        {% endif %}
+                        {{ student.grade }}
                     </div>
                 </div>
             </div>
@@ -69,11 +65,7 @@
                 <label for="input_Class" class="col-sm-3 col-form-label">반</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="input_Class">
-                        {% if student.Class %}
-                            {{ student.Class }}
-                        {% else %}
-                            <span class="text-secondary">{{ student.school }}</span>
-                        {% endif %}
+                        {{ student.Class }}
                     </div>
                 </div>
             </div>
@@ -81,11 +73,7 @@
                 <label for="inputNumber" class="col-sm-3 col-form-label">번호</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputNumber">
-                        {% if student.number %}
-                            {{ student.number }}
-                        {% else %}
-                            <span class="text-secondary">{{ student.school }}</span>
-                        {% endif %}
+                        {{ student.number }}
                     </div>
                 </div>
             </div>
@@ -106,40 +94,63 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="inputDocu_integrated" class="col-sm-3 col-form-label">자기소개서 및 학업계획서</label>
+                <label for="inputTel_pa" class="col-sm-3 col-form-label">온라인 SW 아카데미 수료증</label>
                 <div class="col-sm-9">
-                    <div id="inputDocu_plan">
-                        <a href="{{ student.document.docu_integrated }}" class="btn btn-primary" target="_blank" download>다운로드</a>
-                    </div>
+                    {% if cert_online %}
+                        <a href="{{ student.document.cert_online }}" class="btn btn-primary" target="_blank" download>다운로드</a>
+                    {% else %}
+                        <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputTel_pa" class="col-sm-3 col-form-label">수요진로체험 수료증</label>
+                <div class="col-sm-9">
+                    {% if cert_offline %}
+                        <a href="{{ student.document.cert_offline }}" class="btn btn-primary" target="_blank" download>다운로드</a>
+                    {% else %}
+                        <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputTel_pa" class="col-sm-3 col-form-label">중학생 SW경진대회 확인서</label>
+                <div class="col-sm-9">
+                    {% if cert_contest %}
+                        <a href="{{ student.document.cert_contest }}" class="btn btn-primary" target="_blank" download>다운로드</a>
+                    {% else %}
+                        <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
+                    {% endif %}
                 </div>
             </div>
             <hr>
-            {% if student.score.score_2 is not None %}
+            {% if student.score.score_4 is not None %}
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label-lg">학업계획서 점수</label>
+                    <label class="col-sm-3 col-form-label-lg">가산점 점수</label>
                     <div class="col-sm-9">
                         <div class="form-control form-control-lg">
-                            {{ student.score.score_2 }}
+                            {{ student.score.score_4 }}
                         </div>
                         <div class="form-text">
-                            {{ student.score.score_2_created_at }}
+                            {{ student.score.score_4_created_at }}
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-secondary float-end disabled">학업계획서 채점이 완료되었습니다.</button>
+                <button class="btn btn-secondary float-end disabled">가산점 채점이 완료되었습니다.</button>
             {% else %}
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label-lg">학업계획서 점수</label>
+                        <label class="col-sm-3 col-form-label-lg">가산점 점수</label>
                         <div class="col-sm-9">
-                            <input class="form-control form-control-lg" type="text" name="docu_plan">
+                            <input class="form-control form-control-lg" type="text" name="addition">
                         </div>
                     </div>
                     <button class="btn btn-primary float-end" type="submit">입력하기</button>
                 </form>
             {% endif %}
-            <a href="{% url 'score-student-list' %}" class="btn btn-success float-end me-2" type="submit">목록으로</a>
+            <a href="{% url 'score-student-list' %}" class="btn btn-success float-end me-2" target="_blank"
+               type="submit">목록으로</a>
         {% else %}
             <div class="alert alert-danger" role="alert">
                 찾을 수 없는 학생입니다.
