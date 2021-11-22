@@ -4,6 +4,9 @@ WORKDIR /app
 
 ADD . /app/
 
+RUN apt update -y
+RUN apt install -y gcc
+
 RUN python -m pip install --upgrade pip
 RUN pip install --upgrade setuptools
 RUN pip install -r requirements.txt
