@@ -14,8 +14,8 @@ from score.models import Score
 
 
 def recruit_time():
-    start_timestamp = 1637560800
-    end_timestamp = 1637740800
+    start_timestamp = 1637625600
+    end_timestamp = 1637741100
     now_timestamp = timezone.now().timestamp()
 
     if start_timestamp < now_timestamp < end_timestamp:

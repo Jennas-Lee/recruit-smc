@@ -4,7 +4,6 @@ from pathlib import Path
 
 ENV = True if os.getenv('DJANGO_ENV') == 'production' else False
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 if ENV:
@@ -36,16 +35,11 @@ else:
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = \
 #     os.getenv('DJANGO_SECRET_KEY') if ENV else 'django-insecure-2b7bv)@8r9ebu8^x*ud4#rfkq4jh!q67vx@#c@a1dg@m83#wu%'
 SECRET_KEY = 'django-insecure-2b7bv)@8r9ebu8^x*ud4#rfkq4jh!q67vx@#c@a1dg@m83#wu%'
 ALGORITHM = 'HS256'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if ENV else True
 
 ALLOWED_HOSTS = [
@@ -54,8 +48,6 @@ ALLOWED_HOSTS = [
     # 'web' if ENV else ''
     '*'
 ]
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -105,9 +97,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASE_ROUTERS = ['config.router.DatabaseRouter']
 
 DATABASES = {
@@ -115,9 +104,6 @@ DATABASES = {
     'read': READ_DATABASE,
     'write': WRITE_DATABASE,
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -134,8 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'ko-kr'
 
@@ -147,26 +131,23 @@ USE_L10N = True
 
 USE_TZ = False
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-# STATIC_URL = '/static/'
 STATIC_URL = os.getenv('static_cdn_link') + 'static/' if ENV else '/static/'
+
 STATICFILES_DIRS = [
     os.path.join('static')
 ]
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'authentication.User'
 
 AWS_S3_BUCKET = os.getenv('aws_s3_bucket')
+
 STATIC_CDN_LINK = os.getenv('static_cdn_link')
