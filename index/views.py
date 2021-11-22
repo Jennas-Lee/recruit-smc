@@ -3,6 +3,21 @@ from django.utils import timezone
 from datetime import date
 
 
+def recruit_time():
+    start_timestamp = 1637560800
+    end_timestamp = 1637740800
+    now_timestamp = timezone.now().timestamp()
+
+    if now_timestamp > end_timestamp:
+        recruit_available = 2
+    if start_timestamp < now_timestamp < end_timestamp:
+        recruit_available = 1
+    else:
+        recruit_available = 0
+
+    return recruit_available
+
+
 def index(request):
     now_date = timezone.now().date()
     recruit_date = date(2021, 11, 23)

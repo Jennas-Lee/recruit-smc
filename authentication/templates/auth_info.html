@@ -6,7 +6,8 @@
             찾을 수 없는 사용자입니다.
         </div>
     {% elif request.user.is_authenticated and request.user.permission == 8 %}
-        <form class="m-auto w-75" action="{% url 'teacher-info' id=user.pk %}?from={{ request.GET.from }}" method="POST">
+        <form class="m-auto w-75" action="{% url 'teacher-info' id=user.pk %}?from={{ request.GET.from }}"
+              method="POST">
             <h1 class="text-center mb-2">교사 정보 수정 - {{ user.name }}</h1>
             {% csrf_token %}
             {% if alert %}
@@ -44,6 +45,9 @@
                         </option>
                         <option value="3" {% if user.permission == 3 %}selected{% endif %}>
                             심층면접 채점
+                        </option>
+                        <option value="4" {% if user.permission == 4 %}selected{% endif %}>
+                            가산점 채점
                         </option>
                         <option value="8" class="text-primary" {% if user.permission == 8 %}selected{% endif %}>
                             관리자

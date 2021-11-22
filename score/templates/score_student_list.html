@@ -11,6 +11,7 @@
                 <th scope="col">자기소개서</th>
                 <th scope="col">학업계획서</th>
                 <th scope="col">면접</th>
+                <th scope="col">가산점</th>
             </tr>
             </thead>
             <tbody>
@@ -47,15 +48,15 @@
                             -
                         {% endif %}
                     </td>
-{#                    <td>#}
-{#                        {% if row.score.score_4 is not None %}#}
-{#                            {{ row.score.score_4 }}#}
-{#                        {% elif request.user.permission == 4 or request.user.permission == 8 %}#}
-{#                            <a href="{% url 'score-set-addition' id=row.pk %}" class="btn btn-sm btn-danger">채점</a>#}
-{#                        {% else %}#}
-{#                            -#}
-{#                        {% endif %}#}
-{#                    </td>#}
+                    <td>
+                        {% if row.score.score_4 is not None %}
+                            {{ row.score.score_4 }}
+                        {% elif request.user.permission == 4 or request.user.permission == 8 %}
+                            <a href="{% url 'score-set-addition' id=row.pk %}" class="btn btn-sm btn-danger">채점</a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -112,6 +113,7 @@
                 </li>
             </ul>
         </nav>
+        <a href="{% url 'score-index' %}" class="btn btn-success float-end ms-1">뒤로가기</a>
         {% if request.user.permission == 8 %}
             <a href="{% url 'score-download-excel' %}" class="btn btn-primary float-end">엑셀 파일 다운로드</a>
         {% endif %}

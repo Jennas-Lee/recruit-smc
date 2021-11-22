@@ -30,9 +30,12 @@ def score_student_list(request):
         student = student.order_by(F('score__score_2').desc(nulls_first=True))
     elif request.user.permission == 3:
         student = student.order_by(F('score__score_3').desc(nulls_first=True))
+    elif request.user.permission == 4:
+        student = student.order_by(F('score__score_4').desc(nulls_first=True))
     elif request.user.permission == 8:
         student = student.order_by(F('score__score_1').desc(nulls_first=True)) \
-            .order_by(F('score__score_2').desc(nulls_first=True)).order_by(F('score__score_3').desc(nulls_first=True))
+            .order_by(F('score__score_2').desc(nulls_first=True)).order_by(F('score__score_3').desc(nulls_first=True)) \
+            .order_by(F('score__score_4').desc(nulls_first=True))
     else:
         pass
 
@@ -208,7 +211,7 @@ def score_set_interview(request, id):
                     else:
                         student.score.score_3 = int(interview)
                         student.score.score_3_created_at = now()
-                        student.save()
+                        student.score.save()
 
                         return HttpResponse("""
                                 <script>
@@ -255,7 +258,7 @@ def score_set_addition(request, id):
                     else:
                         student.score.score_4 = int(interview)
                         student.score.score_4_created_at = now()
-                        student.save()
+                        student.score.save()
 
                         return HttpResponse("""
                                 <script>
@@ -282,13 +285,13 @@ def download_excel(request):
     if request.user.is_authenticated:
         if request.user.permission == 8:
             try:
-                # TODO: Add additional score(score_4)
                 student = Student.objects.select_related('score') \
                     .values('name', 'first_major', 'second_major', 'school', 'grade', 'Class', 'number', 'tel_st',
-                            'tel_pa', 'score__score_1', 'score__score_2', 'score__score_3').order_by('pk')
+                            'tel_pa', 'score__score_1', 'score__score_2', 'score__score_3', 'score__score_4') \
+                    .order_by('pk')
                 df = pd.DataFrame(list(student))
                 df.columns = ['이름', '1지망', '2지망', '학교', '학년', '반', '번호', '학생 전화번호', '학부모 전화번호', '자기소개서', '학업계획서',
-                              '심층면접']
+                              '심층면접', '가산점']
                 df.replace({'1지망': {'1': '스마트보안솔루션과', '2': '디바이스소프트웨어과', '3': '인공지능소프트웨어과', '4': '게임소프트웨어과'}},
                            inplace=True)
                 df.replace(
@@ -303,8 +306,10 @@ def download_excel(request):
                     output.name = 'result.xlsx'
                     data = output.getvalue()
 
-                response = HttpResponse(data,
-                                        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                response = HttpResponse(
+                    data,
+                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                )
                 response['Content-Disposition'] = 'attachment; filename="result.xlsx"'
 
                 return response
@@ -312,7 +317,8 @@ def download_excel(request):
             except:
                 return HttpResponse("""
                                         <script>
-                                            alert('오류가 발생했습니다. 다시 시도해주세요. 이 알림이 계속되면 개발자에게 연락주세요.');
+                                            alert('오류가 발생했습니다. 다시 시도해주세요. 이 알림이 계속되면 개발자에게 연락주세요. """ +
+                                    """학생이 아무도 없다면 이 에러가 발생할 수 있습니다.');
                                             location.href = document.referrer;
                                         </script>
                                     """)
