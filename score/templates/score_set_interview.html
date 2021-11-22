@@ -57,7 +57,11 @@
                 <label for="inputGrade" class="col-sm-3 col-form-label">학년</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputGrade">
-                        {{ student.grade }}
+                        {% if student.grade %}
+                            {{ student.grade }}
+                        {% else %}
+                            <span class="text-secondary">{{ student.school }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -65,7 +69,11 @@
                 <label for="input_Class" class="col-sm-3 col-form-label">반</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="input_Class">
-                        {{ student.Class }}
+                        {% if student.Class %}
+                            {{ student.Class }}
+                        {% else %}
+                            <span class="text-secondary">{{ student.school }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -73,7 +81,11 @@
                 <label for="inputNumber" class="col-sm-3 col-form-label">번호</label>
                 <div class="col-sm-9">
                     <div class="form-control" id="inputNumber">
-                        {{ student.number }}
+                        {% if student.number %}
+                            {{ student.number }}
+                        {% else %}
+                            <span class="text-secondary">{{ student.school }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -96,7 +108,7 @@
             <div class="row mb-3">
                 <label for="inputDocu_integrated" class="col-sm-3 col-form-label">심층면접 다운로드</label>
                 <div class="col-sm-9">
-                    <div class="form-control" id="inputDocu_integrated">
+                    <div id="inputDocu_integrated">
                         {% for file in student.document.interview.files %}
                             <a href="{{ file }}" class="btn btn-primary" target="_blank" download>
                                 {{ forloop.counter }}번 다운로드
@@ -131,7 +143,7 @@
                     <button class="btn btn-primary float-end" type="submit">입력하기</button>
                 </form>
             {% endif %}
-            <a href="{% url 'score-student-list' %}" class="btn btn-success float-end me-2" target="_blank" type="submit">목록으로</a>
+            <a href="{% url 'score-student-list' %}" class="btn btn-success float-end me-2" type="submit">목록으로</a>
         {% else %}
             <div class="alert alert-danger" role="alert">
                 찾을 수 없는 학생입니다.

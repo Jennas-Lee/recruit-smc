@@ -12,14 +12,18 @@ from config.settings import AWS_S3_BUCKET, STATIC_CDN_LINK
 from recruit.models import Student, Document
 from score.models import Score
 
-start_timestamp = 1637625600
-end_timestamp = 1637740800
-now_timestamp = timezone.now().timestamp()
 
-if start_timestamp < now_timestamp < end_timestamp:
-    recruit_available = True
-else:
-    recruit_available = False
+def recruit_time():
+    start_timestamp = 1637560800
+    end_timestamp = 1637740800
+    now_timestamp = timezone.now().timestamp()
+
+    if start_timestamp < now_timestamp < end_timestamp:
+        recruit_available = True
+    else:
+        recruit_available = False
+
+    return recruit_available
 
 
 class NotFoundDocuIntegratedException(Exception):
@@ -28,13 +32,13 @@ class NotFoundDocuIntegratedException(Exception):
 
 def index(request):
     return render(request, 'recruit_index.html',
-                  {'recruit_available': recruit_available or request.GET.get('test', None) == 'true'})
+                  {'recruit_available': recruit_time() or request.GET.get('test', None) == 'true'})
 
 
 def form_receive(request):
     if request.method == 'GET':
         return render(request, 'recruit_form_receive.html',
-                      {'recruit_available': recruit_available or request.GET.get('test', None) == 'true'})
+                      {'recruit_available': recruit_time() or request.GET.get('test', None) == 'true'})
 
     elif request.method == 'POST':
         name = request.POST.get('name')
@@ -64,7 +68,7 @@ def form_receive(request):
             'confirm_password': confirm_password,
             'agree': agree,
             'error_messages': [],
-            'recruit_available': recruit_available
+            'recruit_available': recruit_time()
         }
 
         # Name Validation
@@ -189,7 +193,7 @@ def form_receive(request):
 def form_documents(request):
     if request.method == 'GET':
         response_data = {
-            'recruit_available': recruit_available or request.GET.get('test', None) == 'true',
+            'recruit_available': recruit_time() or request.GET.get('test', None) == 'true',
             'name': None,
             'school': None
         }
@@ -234,7 +238,7 @@ def form_documents(request):
                 },
             }
             interview_files = request.FILES.getlist('interview', None)
-            url = 'student/' + str(int(now_timestamp)) + '/' + str(student.pk) + '/'
+            url = 'student/' + str(int(timezone.now().timestamp())) + '/' + str(student.pk) + '/'
 
             try:
                 document = Document()

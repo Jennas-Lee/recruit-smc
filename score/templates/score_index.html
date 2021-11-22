@@ -10,6 +10,8 @@
                 학업계획서 채점
             {% elif request.user.permission == 3 %}
                 심층면접 채점
+            {% elif request.user.permission == 4 %}
+                가산점 채점
             {% elif request.user.permission == 8 %}
                 관리자
             {% endif %}
@@ -22,6 +24,8 @@
                     학업계획서 채점
                 {% elif request.user.permission == 3 %}
                     심층면접 채점
+                {% elif request.user.permission == 4 %}
+                    가산점 채점
                 {% elif request.user.permission == 8 %}
                     학생 목록 관리
                 {% endif %}
