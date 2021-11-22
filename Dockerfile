@@ -1,4 +1,4 @@
-FROM python:3.10.0-bullseye
+FROM public.ecr.aws/bitnami/python:3.10.0
 
 WORKDIR /app
 
