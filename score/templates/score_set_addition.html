@@ -108,7 +108,7 @@
             <div class="row mb-3">
                 <label for="inputTel_pa" class="col-sm-3 col-form-label">온라인 SW 아카데미 수료증</label>
                 <div class="col-sm-9">
-                    {% if cert_online %}
+                    {% if student.document.cert_online %}
                         <a href="{{ student.document.cert_online }}" class="btn btn-primary" target="_blank" download>다운로드</a>
                     {% else %}
                         <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
@@ -118,7 +118,7 @@
             <div class="row mb-3">
                 <label for="inputTel_pa" class="col-sm-3 col-form-label">수요진로체험 수료증</label>
                 <div class="col-sm-9">
-                    {% if cert_offline %}
+                    {% if student.document.cert_offline %}
                         <a href="{{ student.document.cert_offline }}" class="btn btn-primary" target="_blank" download>다운로드</a>
                     {% else %}
                         <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
@@ -128,7 +128,7 @@
             <div class="row mb-3">
                 <label for="inputTel_pa" class="col-sm-3 col-form-label">중학생 SW경진대회 확인서</label>
                 <div class="col-sm-9">
-                    {% if cert_contest %}
+                    {% if student.document.cert_contest %}
                         <a href="{{ student.document.cert_contest }}" class="btn btn-primary" target="_blank" download>다운로드</a>
                     {% else %}
                         <a href="#" class="btn btn-secondary disabled">입력하지 않음</a>
